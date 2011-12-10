@@ -1,0 +1,44 @@
+#!/system/xbin/bash
+/system/bin/toolbox setprop persist.service.adb.enable 1
+if [ -e /data/adbfix.txt ]
+  then
+    /system/xbin/bash /system/bin/adbfix;
+fi;
+
+
+if [ -e /data/dta2sd.log ];
+  then
+    if [ -e /data/dta2sd.lg2 ];
+      then 
+        /system/xbin/busybox rm -f /data/dta2sd.lg2
+    fi
+    if [ -e /data/dta2sd.lg1 ]
+      then
+        busybox cp -f /data/dta2sd.lg1 /data/dta2sd.lg2
+        busybox rm -f /data/dta2sd.lg1
+    fi
+    busybox cp -f /data/dta2sd.log /data/dta2sd.lg1
+    busybox rm -f /data/dta2sd.log
+fi
+echo "[ ] Apps2SD is launching..."
+echo "[ ] Darktremor Apps2SD Log" > /data/dta2sd.log
+echo "[ ] Started: `/system/xbin/busybox date;`" >> /data/dta2sd.log
+echo "[ ] File running: Main Apps2SD launch (a2sd, apps2sd or 04apps2sd)" >> /data/dta2sd.log
+if [ $# == 0 ];
+  then
+    echo "[ ] Started with no parameters.  Possible boot launch" >> /data/dta2sd.log
+    echo "[ ] Inserting parameter:  boot" >> /data/dta2sd.log
+    export a2sdparm="boot"
+  else
+    echo "[ ] Started with parameter: $1" >> /data/dta2sd.log
+    export a2sdparm=$1
+fi
+
+echo "[ ] Directory Listing: /dev/block:" >> /data/dta2sd.log
+busybox ls -l /dev/block >> /data/dta2sd.log
+echo "[ ] Listing partitions currently active:" >> /data/dta2sd.log
+busybox cat /proc/mounts >> /data/dta2sd.log
+echo "[ ] Attempting to launch program:  launcha2sd" >> /data/dta2sd.log
+busybox ash /system/bin/launcha2sd $a2sdparm
+echo "[ ] Ending program: a2sd / apps2sd / 04apps2sd" >> /data/dta2sd.log
+exit;

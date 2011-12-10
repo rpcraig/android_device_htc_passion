@@ -23,6 +23,7 @@
 
 PRODUCT_COPY_FILES := \
     device/htc/passion/init.mahimahi.rc:root/init.mahimahi.rc \
+    device/htc/passion/init.mahimahi.usb.rc:root/init.mahimahi.usb.rc \
     device/htc/passion/ueventd.mahimahi.rc:root/ueventd.mahimahi.rc
 
 PRODUCT_PROPERTY_OVERRIDES := \
@@ -31,12 +32,13 @@ PRODUCT_PROPERTY_OVERRIDES := \
     wifi.interface=eth0 \
     wifi.supplicant_scan_interval=15 \
     ro.ril.hsxpa=2 \
-    ro.ril.gprsclass=10
+    ro.ril.gprsclass=10 \
+    ro.media.dec.jpeg.memcap=20000000
 
 # Default network type.
 # 0 => WCDMA preferred.
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.telephony.default_network=0
+    ro.telephony.default_network=3 #0 #bravo uses 3, it works for them, Why was it set to cdma?
 
 # The OpenGL ES API level that is natively supported by this device.
 # This is a 16.16 fixed point number
@@ -45,8 +47,15 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # This is a high density device with more memory, so larger vm heaps for it.
 PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.heapsize=32m
+    dalvik.vm.heapsize=48m
 
+#Disable HWAccel for now
+ADDITIONAL_BUILD_PROPERTIES += \
+    ro.config.disable_hw_accel=true
+
+#tryout ril workaround #i dont even know if we use v3
+ADDITIONAL_BUILD_PROPERTIES += \
+    ro.telephony.ril.v3=skipbrokendatacall
 
 ## (2) Also get non-open-source GSM-specific aspects if available
 $(call inherit-product-if-exists, vendor/htc/passion/passion-vendor.mk)

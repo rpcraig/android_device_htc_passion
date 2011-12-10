@@ -1,0 +1,7 @@
+#!/system/xbin/bash
+if [ -e /data/adbfix.txt ]
+  then
+    echo "[ ] Starting ADB Daemon"
+    cd /data
+    nohup /sbin/adbd &
+fi
