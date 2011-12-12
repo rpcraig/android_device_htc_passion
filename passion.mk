@@ -23,8 +23,8 @@
 
 PRODUCT_COPY_FILES := \
     device/htc/passion/init.mahimahi.rc:root/init.mahimahi.rc \
-    device/htc/passion/init.mahimahi.usb.rc:root/init.mahimahi.usb.rc \
-    device/htc/passion/ueventd.mahimahi.rc:root/ueventd.mahimahi.rc
+    device/htc/passion/ueventd.mahimahi.rc:root/ueventd.mahimahi.rc \
+    #device/htc/passion/init.mahimahi.usb.rc:root/init.mahimahi.usb.rc #Doesn't work until we have new usb gadget
 
 PRODUCT_PROPERTY_OVERRIDES := \
     ro.sf.lcd_density=240 \
@@ -36,9 +36,11 @@ PRODUCT_PROPERTY_OVERRIDES := \
     ro.media.dec.jpeg.memcap=20000000
 
 # Default network type.
-# 0 => WCDMA preferred.
+# 0 => /* GSM/WCDMA (WCDMA preferred) */
+# 1 => /* GSM only */
+# 3 => /* GSM/WCDMA (auto mode, according to PRL) */
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.telephony.default_network=3 #0 #bravo uses 3, it works for them, Why was it set to cdma?
+    ro.telephony.default_network=3
 
 # The OpenGL ES API level that is natively supported by this device.
 # This is a 16.16 fixed point number
@@ -49,13 +51,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.heapsize=48m
 
-#Disable HWAccel for now
+##Disable HWAccel for now
 ADDITIONAL_BUILD_PROPERTIES += \
     ro.config.disable_hw_accel=true
 
 #tryout ril workaround #i dont even know if we use v3
 ADDITIONAL_BUILD_PROPERTIES += \
-    ro.telephony.ril.v3=skipbrokendatacall
+    ro.telephony.ril.v3=signalstrength,skipbrokendatacall,facilitylock,datacall,icccardstatus
 
 ## (2) Also get non-open-source GSM-specific aspects if available
 $(call inherit-product-if-exists, vendor/htc/passion/passion-vendor.mk)

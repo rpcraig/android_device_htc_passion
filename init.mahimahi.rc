@@ -19,9 +19,6 @@ on post-fs-data
 on boot
     mount debugfs /sys/kernel/debug /sys/kernel/debug
 
-    #genlock FIXME
-    #chmod 0777 /dev/genlock
-    
     # bluetooth power up/down interface
     chown bluetooth bluetooth /dev/ttyHS0
     chmod 0600 /dev/ttyHS0
@@ -82,6 +79,9 @@ on boot
 
     # GPRS class
     setprop ro.ril.gprsclass 10
+
+    #Load modules
+    insmod /system/lib/modules/fuse.ko
 
     # compass/accelerometer daemon
 service akmd /system/bin/akmd
