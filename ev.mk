@@ -2,13 +2,10 @@ $(call inherit-product, device/htc/passion/full_passion.mk)
 
 $(call inherit-product, vendor/evervolv/products/common.mk)
 
-# Include GSM stuff -- FIXME: apns-conf.xml called by gsm.mk
-#$(call inherit-product, vendor/evervolv/products/gsm.mk)
-
 #
 # Setup device specific product configuration.
 #
-PRODUCT_NAME := evervolv_passion
+PRODUCT_NAME := ev_passion
 PRODUCT_BRAND := google
 PRODUCT_DEVICE := passion
 PRODUCT_MODEL := Nexus One
@@ -36,15 +33,14 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.ril.emc.mode=2
 
 # Hot Reboot overlay
-PRODUCT_PACKAGE_OVERLAYS += vendor/evervolv/overlay/hot_reboot
+PRODUCT_PACKAGE_OVERLAYS += vendor/ev/overlay/hot_reboot
 
 #Temp packages -- Until they are added elsewhere
 PRODUCT_PACKAGES += \
     bash vim nano libncurses ssh rsync \
     e2fsck resize2fs e2fsck \
-    libext2_com_err libext2_profile libext2_blkid libext2_e2p libext2_uuid libext2fs \
-    Stk
+    libext2_com_err libext2_profile libext2_blkid libext2_e2p libext2_uuid libext2fs
 
 # Copy hdpi specific bootanimation
 PRODUCT_COPY_FILES +=  \
-   vendor/evervolv/prebuilt/hdpi/media/bootanimation.zip:system/media/bootanimation.zip
+   vendor/ev/prebuilt/hdpi/media/bootanimation.zip:system/media/bootanimation.zip
