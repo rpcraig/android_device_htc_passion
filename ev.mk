@@ -19,7 +19,7 @@ PRIVATE_BUILD_DESC="passion-user 2.3.6 GRK39F 189904 release-keys"
 # Set up the product codename, build version & MOTD.
 #
 PRODUCT_CODENAME := Perdo
-
+#PRODUCT_VERSION_DEVICE_SPECIFIC := p2
 ifeq ($(NIGHTLY_BUILD),true)
     BUILD_VERSION := 2.0.0p1-$(shell date +%m%d%Y)-NIGHTLY
 else
@@ -48,5 +48,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGE_OVERLAYS += vendor/ev/overlay/hot_reboot
 
 # Copy hdpi specific bootanimation
-PRODUCT_COPY_FILES +=  \
-    vendor/ev/prebuilt/hvga/media/bootanimation.zip:system/media/bootanimation.zip
+#PRODUCT_COPY_FILES +=  \
+#    vendor/ev/prebuilt/hvga/media/bootanimation.zip:system/media/bootanimation.zip
+# Use the n1 stock boot animation until we get a custom evervolv one.
+$(call inherit-product-if-exists, device/htc/passion/extras/extras.mk)

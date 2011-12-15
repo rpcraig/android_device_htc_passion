@@ -24,10 +24,12 @@ PRODUCT_PROPERTY_OVERRIDES := \
     ro.sf.lcd_density=240 \
     rild.libpath=/system/lib/libhtc_ril.so \
     wifi.interface=eth0 \
-    wifi.supplicant_scan_interval=15 \
+    wifi.supplicant_scan_interval=180 \
     ro.ril.hsxpa=2 \
     ro.ril.gprsclass=10 \
-    ro.media.dec.jpeg.memcap=20000000
+    ro.media.dec.jpeg.memcap=20000000 \
+    ro.opengles.version=131072 \
+    dalvik.vm.heapsize=48m
 
 # Default network type.
 # 0 => /* GSM/WCDMA (WCDMA preferred) */
@@ -35,15 +37,6 @@ PRODUCT_PROPERTY_OVERRIDES := \
 # 3 => /* GSM/WCDMA (auto mode, according to PRL) */
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.telephony.default_network=3
-
-# The OpenGL ES API level that is natively supported by this device.
-# This is a 16.16 fixed point number
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.opengles.version=131072
-
-# This is a high density device with more memory, so larger vm heaps for it.
-PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.heapsize=48m
 
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
@@ -56,6 +49,12 @@ ADDITIONAL_BUILD_PROPERTIES += \
 # Disable HWAccel for now
 ADDITIONAL_BUILD_PROPERTIES += \
     ro.config.disable_hw_accel=true
+
+# Performance Tweaks
+PRODUCT_PROPERTY_OVERRIDES += \
+    pm.sleep_mode=1 \
+    ro.ril.disable.power.collapse=0 \
+    windowsmgr.max_events_per_sec=260
 
 #
 # Packages needed for Passion
@@ -96,7 +95,10 @@ PRODUCT_COPY_FILES := \
     device/htc/passion/init.mahimahi.usb.rc:root/init.mahimahi.usb.rc \
     device/htc/passion/ueventd.mahimahi.rc:root/ueventd.mahimahi.rc \
     device/htc/passion/mahimahi-keypad.kl:system/usr/keylayout/mahimahi-keypad.kl \
+    device/htc/passion/mahimahi-keypad.kcm:system/usr/keychars/mahimahi-keypad.kcm \
     device/htc/passion/h2w_headset.kl:system/usr/keylayout/h2w_headset.kl \
+    device/htc/passion/mahimahi-nav.kl:system/usr/keylayout/mahimahi-nav.kl \
+    device/htc/passion/mahimahi-nav.idc:system/usr/idc/mahimahi-nav.idc \
     device/htc/passion/synaptics-rmi-touchscreen.idc:system/usr/idc/synaptics-rmi-touchscreen.idc \
     device/htc/passion/vold.fstab:system/etc/vold.fstab
 
