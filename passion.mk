@@ -22,21 +22,38 @@ DEVICE_PACKAGE_OVERLAYS := device/htc/passion/overlay
 # General propreties
 PRODUCT_PROPERTY_OVERRIDES := \
     ro.sf.lcd_density=240 \
-    rild.libpath=/system/lib/libhtc_ril.so \
     wifi.interface=eth0 \
     wifi.supplicant_scan_interval=180 \
-    ro.ril.hsxpa=2 \
-    ro.ril.gprsclass=10 \
     ro.media.dec.jpeg.memcap=20000000 \
     ro.opengles.version=131072 \
     dalvik.vm.heapsize=48m
 
+# Ril properties
+PRODUCT_PROPERTY_OVERRIDES += \
+    rild.libpath=/system/lib/libhtc_ril.so \
+    ro.ril.hsxpa=2 \
+    ro.ril.hsdpa.category=8 \
+    ro.ril.hsupa.category=5 \
+    ro.ril.gprsclass=10 #bravo is at 12
+
+# Stuff from bravo that might fix network issues
+# I'm not sure what most of this means
+#PRODUCT_PROPERTY_OVERRIDES += \
+#    ro.ril.ecc.HTC-ELL=92,93,94 \
+#    ro.ril.ecc.HTC-WWE=999 \
+#    ro.ril.enable.a52.HTC-ITA=1 \
+#    ro.ril.enable.a53.HTC-ITA=1 \
+#    ro.ril.enable.a52=0 \
+#    ro.ril.enable.a53=1 \
+#    ro.ril.enable.dtm=1 \
+#    mobiledata.interfaces=rmnet0,rmnet1,rmnet2 \
+#    ro.ril.enable.prl.recognition=1
+
 # Default network type.
 # 0 => /* GSM/WCDMA (WCDMA preferred) */
-# 1 => /* GSM only */
 # 3 => /* GSM/WCDMA (auto mode, according to PRL) */
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.telephony.default_network=3
+    ro.telephony.default_network=0
 
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
@@ -51,10 +68,10 @@ ADDITIONAL_BUILD_PROPERTIES += \
     ro.config.disable_hw_accel=true
 
 # Performance Tweaks
-PRODUCT_PROPERTY_OVERRIDES += \
-    pm.sleep_mode=1 \
-    ro.ril.disable.power.collapse=0 \
-    windowsmgr.max_events_per_sec=260
+#PRODUCT_PROPERTY_OVERRIDES += \
+#    pm.sleep_mode=1 \
+#    ro.ril.disable.power.collapse=0 \
+#    windowsmgr.max_events_per_sec=260
 
 #
 # Packages needed for Passion
@@ -97,7 +114,6 @@ PRODUCT_COPY_FILES := \
     device/htc/passion/mahimahi-keypad.kl:system/usr/keylayout/mahimahi-keypad.kl \
     device/htc/passion/mahimahi-keypad.kcm:system/usr/keychars/mahimahi-keypad.kcm \
     device/htc/passion/h2w_headset.kl:system/usr/keylayout/h2w_headset.kl \
-    device/htc/passion/mahimahi-nav.kl:system/usr/keylayout/mahimahi-nav.kl \
     device/htc/passion/mahimahi-nav.idc:system/usr/idc/mahimahi-nav.idc \
     device/htc/passion/synaptics-rmi-touchscreen.idc:system/usr/idc/synaptics-rmi-touchscreen.idc \
     device/htc/passion/vold.fstab:system/etc/vold.fstab

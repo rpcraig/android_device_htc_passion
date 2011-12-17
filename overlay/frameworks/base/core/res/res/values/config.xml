@@ -89,14 +89,10 @@
     
     <!-- Component name of the default wallpaper. This will be ImageWallpaper if not 
          specified -->
-    <!--
+<!--
     <string name="default_wallpaper_component">com.android.wallpaper/.nexus.NexusWallpaper</string>
-    -->
+-->
 
-    <!--
-    <string name="default_wallpaper_component">com.android.phasebeam/.PhaseBeamWallpaper</string>
-    -->
-    
     <integer name="config_deskDockKeepsScreenOn">0</integer>
     <integer name="config_carDockKeepsScreenOn">1</integer>
 
@@ -208,7 +204,7 @@
 <!-- Max space (in MB) allocated to DownloadManager to store the downloaded
          files if they are to be stored in DownloadManager's data dir,
          which typically is /data/data/com.android.providers.downloads/files -->
-    <integer name="config_downloadDataDirSize">30</integer>
+    <integer name="config_downloadDataDirSize">50</integer>
 
     <!-- Max number of downloads allowed to proceed concurrently -->
     <integer name="config_MaxConcurrentDownloadsAllowed">4</integer>
@@ -217,5 +213,5 @@
          below the percentage value specified by this param, DownloadManager
          starts removing files to try to make percentage of available
          free space above this threshold value. -->
-    <integer name="config_downloadDataDirLowSpaceThreshold">15</integer>
+    <integer name="config_downloadDataDirLowSpaceThreshold">10</integer>
 </resources>

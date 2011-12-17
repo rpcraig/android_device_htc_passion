@@ -3,25 +3,25 @@
 #Nexus One Stock Boot Animation
 PRODUCT_COPY_FILES += device/htc/passion/extras/nexus-bootanimation.zip:system/media/bootanimation.zip
 
-ifneq ($(MINISKIRT),true)
 #init.d
 PRODUCT_COPY_FILES += \
     device/htc/passion/extras/system/bin/sysinit:system/bin/sysinit \
-    device/htc/passion/extras/system/etc/init.local.rc:system/etc/init.local.rc \
     device/htc/passion/extras/system/etc/init.d/05mountsd:system/etc/init.d/05mountsd \
     device/htc/passion/extras/system/bin/mountsd:system/bin/mountsd
 
+ifneq ($(MINISKIRT),true)
 # I think this is needed for nano
 PRODUCT_COPY_FILES += \
     device/htc/passion/extras/system/etc/profile:system/etc/profile \
     device/htc/passion/extras/system/etc/terminfo/l/linux:system/etc/terminfo/l/linux \
-    device/htc/passion/extras/system/etc/terminfo/u/unknown:system/etc/terminfo/u/unknown \
+    device/htc/passion/extras/system/etc/terminfo/u/unknown:system/etc/terminfo/u/unknown
 
 #xbin
 PRODUCT_COPY_FILES += \
     device/htc/passion/extras/system/xbin/dropbear-keygen:system/xbin/dropbear-keygen \
     device/htc/passion/extras/system/xbin/htop:system/xbin/htop \
-    device/htc/passion/extras/system/xbin/powertop:system/xbin/powertop \
+    device/htc/passion/extras/system/xbin/powertop:system/xbin/powertop
+endif
 
 # DT apps2sd v2.7.5.2 stable
 PRODUCT_COPY_FILES += \
@@ -33,9 +33,9 @@ PRODUCT_COPY_FILES += \
     device/htc/passion/extras/dt-apps2sd/bin/launcha2sd:system/bin/launcha2sd \
     device/htc/passion/extras/dt-apps2sd/bin/starta2sd:system/bin/starta2sd \
     device/htc/passion/extras/dt-apps2sd/etc/init.d/99complete:system/etc/init.d/99complete
-endif
 
-ifeq ($(GAPPS),true)
-# Get some Gapps
-$(call inherit-product-if-exists, gapps/gapps.mk)
+ifeq ($(MINISKIRT),true)
+PRODUCT_PACKGES+= \
+    bash
+    e2fsck
 endif
