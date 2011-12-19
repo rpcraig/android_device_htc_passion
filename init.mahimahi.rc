@@ -1,13 +1,5 @@
 import init.mahimahi.usb.rc
 
-on early-init
-    export EXTERNAL_STORAGE /mnt/sdcard
-    export SD_EXT_DIRECTORY /sd-ext
-    mkdir /mnt/sdcard 0000 system system
-    mkdir /sd-ext 0771 system system
-    # for backwards compatibility
-    symlink /mnt/sdcard /sdcard
-
 on post-fs-data
     mkdir /data/misc/wifi 0770 wifi wifi
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
@@ -77,13 +69,10 @@ on boot
     setprop ro.ril.fd.scron.timeout 4
     setprop ro.ril.fd.scroff.timeout 3
 
-    # GPRS class
-    setprop ro.ril.gprsclass 10
-
-    #Load modules
+    # Load modules FIXME
     insmod /system/lib/modules/fuse.ko
 
-    # compass/accelerometer daemon
+    # Compass/Accelerometer daemon
 service akmd /system/bin/akmd
     class main
     user compass
@@ -105,7 +94,7 @@ service dhcpcd_eth0 /system/bin/dhcpcd -ABKL
     disabled
     oneshot
 
-# bugreport is triggered by the KEY_VOLUMEUP and BTN_MOUSE keycodes
+    # Bugreport is triggered by the KEY_VOLUMEUP and BTN_MOUSE keycodes
 service bugreport /system/bin/dumpstate -d -v -o /sdcard/bugreports/bugreport
     class main
     disabled

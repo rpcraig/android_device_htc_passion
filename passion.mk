@@ -98,7 +98,8 @@ PRODUCT_PACKAGES += \
 #    hwcomposer.mahimahi \
 #    libgenlock \
 #    libmemalloc \
-#    libtilerenderer
+#    libtilerenderer \
+#    libQcomUI
 
 PRODUCT_LOCALES := en
 

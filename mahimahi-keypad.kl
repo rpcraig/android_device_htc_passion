@@ -8,6 +8,8 @@ key 59    MENU              WAKE_DROPPED
 key 139   MENU              WAKE_DROPPED
 key 127   SEARCH            WAKE_DROPPED
 key 217   SEARCH            WAKE_DROPPED
+#key 232   BTN_MOUSE         WAKE_DROPPED
+#key 272   BTN_MOUSE         WAKE_DROPPED
 #key 399   GRAVE
 #key 2     1
 #key 3     2
