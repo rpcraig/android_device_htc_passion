@@ -1,42 +1,34 @@
 #Special stuff for drewis
 
-#Nexus One Stock Boot Animation
-PRODUCT_COPY_FILES += device/htc/passion/extras/nexus-bootanimation.zip:system/media/bootanimation.zip
-
-
-# We should really move these to vendor/ev
-# I think this is needed for nano
-PRODUCT_COPY_FILES += \
-    device/htc/passion/extras/system/etc/profile:system/etc/profile \
-    device/htc/passion/extras/system/etc/terminfo/l/linux:system/etc/terminfo/l/linux \
-    device/htc/passion/extras/system/etc/terminfo/u/unknown:system/etc/terminfo/u/unknown
-
-#xbin
-PRODUCT_COPY_FILES += \
-    device/htc/passion/extras/system/xbin/dropbear-keygen:system/xbin/dropbear-keygen \
-    device/htc/passion/extras/system/xbin/htop:system/xbin/htop \
-    device/htc/passion/extras/system/xbin/powertop:system/xbin/powertop
-
-# It doesn't work isn't that weird?
-#init.d
-#PRODUCT_COPY_FILES += \
-#    device/htc/passion/extras/system/bin/sysinit:system/bin/sysinit \
-#    device/htc/passion/extras/system/etc/init.d/05mountsd:system/etc/init.d/05mountsd \
-#    device/htc/passion/extras/system/bin/mountsd:system/bin/mountsd
-
-## DT apps2sd v2.7.5.2 stable
-#PRODUCT_COPY_FILES += \
-#    device/htc/passion/extras/dt-apps2sd/bin/adbfix:system/bin/adbfix \
-#    device/htc/passion/extras/dt-apps2sd/bin/a2sd:system/bin/a2sd \
-#    device/htc/passion/extras/dt-apps2sd/bin/apps2sd.hlp:system/bin/apps2sd.hlp \
-#    device/htc/passion/extras/dt-apps2sd/bin/chka2sd:system/bin/chka2sd \
-#    device/htc/passion/extras/dt-apps2sd/bin/zipalign:system/bin/zipalign \
-#    device/htc/passion/extras/dt-apps2sd/bin/launcha2sd:system/bin/launcha2sd \
-#    device/htc/passion/extras/dt-apps2sd/bin/starta2sd:system/bin/starta2sd \
-#    device/htc/passion/extras/dt-apps2sd/etc/init.d/99complete:system/etc/init.d/99complete
+# Get some gapps
+ifeq ($(GAPPS),true)
+$(call inherit-product, vendor/ev/prebuilt/gapps/gapps.mk)
+endif
 
 ifeq ($(MINISKIRT),true)
+# Needed by a2sd but not included in userdebug builds
 PRODUCT_PACKGES+= \
     bash \
-    e2fsck
+    e2fsck \
+    tune2fs
 endif
+
+# Nexus One Stock Boot Animation
+PRODUCT_COPY_FILES += device/htc/passion/extras/nexus-bootanimation.zip:system/media/bootanimation.zip
+
+# Started as DT 2.7.5.3 Beta 4a
+# Ended as my own little a2sd script
+PRODUCT_COPY_FILES += \
+    device/htc/passion/extras/a2sd/system/etc/init.d/10apps2sd:system/etc/init.d/10apps2sd
+
+#    device/htc/passion/extras/a2sd/system/bin/fix_permissions:system/bin/fix_permissions \
+#    device/htc/passion/extras/a2sd/system/bin/zipalign:system/bin/zipalign \
+#    device/htc/passion/extras/a2sd/system/bin/a2sd:system/bin/a2sd \
+#    device/htc/passion/extras/a2sd/system/bin/apps2sd.hlp:system/bin/apps2sd.hlp \
+#    device/htc/passion/extras/a2sd/system/bin/chka2sd:system/bin/chka2sd \
+#    device/htc/passion/extras/a2sd/system/bin/launcha2sd:system/bin/launcha2sd \
+#    device/htc/passion/extras/a2sd/system/bin/starta2sd:system/bin/starta2sd \
+#    device/htc/passion/extras/a2sd/system/etc/init.d/99complete:system/etc/init.d/99complete \
+#    device/htc/passion/extras/a2sd/system/etc/init.d/dtapp:system/etc/init.d/06dtapp
+#    device/htc/passion/extras/a2sd/system/bin/adbfix:system/bin/adbfix \
+#    device/htc/passion/extras/a2sd/system/bin/dtinstall:system/bin/dtinstall \

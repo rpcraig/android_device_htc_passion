@@ -1,0 +1,49 @@
+#!/system/bin/sh
+# Make sure the Apps2SD structure exists.
+# Originates from CM7, revised 20111220 by Andrew Sutherland for Evervolv ICS.
+
+SD_EXT_DIRECTORY=/sd-ext;
+#freshinstall="false";
+bb=/system/xbin/busybox;
+if ! awk -vDIR="$SD_EXT_DIRECTORY" '$2 == DIR { exit 1; }' /proc/mounts ;
+then
+    for i in app app-private; # dalvik-cache data;
+    do
+        # create directories if necessary.
+        if [ ! -d $SD_EXT_DIRECTORY/$i ];
+        then
+            mkdir $SD_EXT_DIRECTORY/$i;
+            $bb chown 1000:1000 $SD_EXT_DIRECTORY/$i;
+            $bb chmod 771 $SD_EXT_DIRECTORY/$i;
+            log -p i -t apps2sd "$SD_EXT_DIRECTORY/$i created";
+        fi;
+        # move apks/ create symlinks if necessary: Will only run after a wipe
+        if [ ! -h /data/$i ];
+        then
+            log -p i -t apps2sd "Moving apks in /data/$i";
+            #Not really necissary since there shouldn't be anything in it more of safety measure.
+            $bb mv -f /data/$i/* $SD_EXT_DIRECTORY/$i;
+            log -p i -t apps2sd "Removing /data/$i";
+            $bb rm -rf /data/$i;
+            log -p i -t apps2sd "Creating Symbolic link for /data/$i";
+            $bb ln -s $SD_EXT_DIRECTORY/$i /data/$i;
+#            $freshinstall="true";
+        fi;
+    done
+#    if [ "$freshinstall" == "true" ];
+#    then
+#        log -p i -t apps2sd "Fixing permissions real quick";
+#        /system/bin/fix_permissions;
+#        log -p i -t apps2sd "Apps2sd installed... rebooting";
+#        $bb sync;
+#        $bb reboot -f;
+#    fi;
+    setprop a2sd.mountpoint `cat /proc/mounts | grep "$SD_EXT_DIRECTORY" | awk '/^\// {print $1;exit;}'`
+    log -p i -t apps2sd "Apps2SD successfully activated";
+    log -p i -t apps2sd "Ending 10apps2sd";
+    setprop ev.filesystem.ready 1
+else
+    log -p i -t apps2sd "$SD_EXT_DIRECTORY not mounted! Disabling Apps2sd";
+    setprop a2sd.mountpoint "none"
+    log -p i -t apps2sd "Ending 10apps2sd";
+fi;
