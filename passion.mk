@@ -31,41 +31,36 @@ PRODUCT_PROPERTY_OVERRIDES := \
 # Ril properties
 PRODUCT_PROPERTY_OVERRIDES += \
     rild.libpath=/system/lib/libhtc_ril.so \
+    ro.ril.enable.managed.roaming=1 \
+    ro.ril.oem.nosim.ecclist=911,112,999,000,08,118,120,122,110,119,995 \
+    ro.ril.emc.mode=2 \
     ro.ril.hsxpa=2 \
-    ro.ril.hsdpa.category=8 \
-    ro.ril.hsupa.category=5 \
-    ro.ril.gprsclass=10 #bravo is at 12
+    ro.ril.gprsclass=10
 
-# Stuff from bravo that might fix network issues
-# I'm not sure what most of this means
-#PRODUCT_PROPERTY_OVERRIDES += \
-#    ro.ril.ecc.HTC-ELL=92,93,94 \
-#    ro.ril.ecc.HTC-WWE=999 \
-#    ro.ril.enable.a52.HTC-ITA=1 \
-#    ro.ril.enable.a53.HTC-ITA=1 \
-#    ro.ril.enable.a52=0 \
-#    ro.ril.enable.a53=1 \
-#    ro.ril.enable.dtm=1 \
-#    mobiledata.interfaces=rmnet0,rmnet1,rmnet2 \
-#    ro.ril.enable.prl.recognition=1
+#    ro.ril.hsdpa.category=8 \
+#    ro.ril.hsupa.category=5 \
+#    ro.ril.gprsclass=12
 
 # Default network type.
 # 0 => /* GSM/WCDMA (WCDMA preferred) */
 # 3 => /* GSM/WCDMA (auto mode, according to PRL) */
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.telephony.default_network=0
+PRODUCT_PROPERTY_OVERRIDES += ro.telephony.default_network=0
 
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
 
 # Ril workaround
-ADDITIONAL_BUILD_PROPERTIES += \
-    ro.telephony.ril.v3=signalstrength
+ADDITIONAL_BUILD_PROPERTIES += ro.telephony.ril.v3=signalstrength
     #,skipbrokendatacall,facilitylock,datacall,icccardstatus
 
 # Disable HWAccel for now
-ADDITIONAL_BUILD_PROPERTIES += \
-    ro.config.disable_hw_accel=true
+ADDITIONAL_BUILD_PROPERTIES += ro.config.disable_hw_accel=true
+
+# Set usb type
+ADDITIONAL_DEFAULT_PROPERTIES += \
+    persist.sys.usb.config=mass_storage \
+    persist.service.adb.enable=1
+
 
 # Performance Tweaks
 #PRODUCT_PROPERTY_OVERRIDES += \
@@ -121,8 +116,7 @@ PRODUCT_COPY_FILES := \
 
 # Prebuilt Modules
 PRODUCT_COPY_FILES += \
-    device/htc/passion/prebuilt/bcm4329.ko:system/lib/modules/bcm4329.ko \
-    device/htc/passion/prebuilt/fuse.ko:system/lib/modules/fuse.ko
+    device/htc/passion/prebuilt/bcm4329.ko:system/lib/modules/bcm4329.ko
 
 # Prebuilt Kernel
 PRODUCT_COPY_FILES += \

@@ -139,6 +139,7 @@ endif
 
 BOARD_FLASH_BLOCK_SIZE := 131072 # use 4096 for ext4
 
+TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/usb_mass_storage/lun0/file
 
 TARGET_RELEASETOOLS_EXTENSIONS := device/htc/common
 

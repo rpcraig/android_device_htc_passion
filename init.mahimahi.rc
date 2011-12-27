@@ -69,9 +69,6 @@ on boot
     setprop ro.ril.fd.scron.timeout 4
     setprop ro.ril.fd.scroff.timeout 3
 
-    # Load modules FIXME
-    insmod /system/lib/modules/fuse.ko
-
     # Compass/Accelerometer daemon
 service akmd /system/bin/akmd
     class main

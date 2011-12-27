@@ -100,7 +100,7 @@
     <color name="config_defaultNotificationColor">#ffffffff</color>
 
     <!-- Default blink frequency for notification LED is 9 seconds. -->
-    <integer name="config_defaultNotificationLedOff">9000</integer>
+    <integer name="config_defaultNotificationLedOff">6000</integer>
 
     <!-- Component name of the service providing network location support. -->
     <string name="config_networkLocationProvider">com.google.android.location.NetworkLocationProvider</string>
@@ -169,7 +169,7 @@
     <bool name="config_showNavigationBar">false</bool>
     
     <!-- Minimum screen brightness allowed by the power manager. -->
-    <integer name="config_screenBrightnessDim">10</integer>
+    <integer name="config_screenBrightnessDim">8</integer>
     
     <!-- Boolean indicating whether the wifi chipset has dual frequency band support -->
     <bool translatable="false" name="config_wifi_dual_band_support">false</bool>
@@ -184,10 +184,6 @@
     
     <!-- Is the notification LED intrusive? Used to decide if there should be a disable option -->
     <bool name="config_intrusiveNotificationLed">true</bool>
-
-    <!-- Boolean indicating if restoring network selection should be skipped -->
-    <!-- The restoring is handled by modem if it is true -->
-    <bool translatable="false" name="skip_restoring_network_selection">true</bool>
 
     <!-- Vibrator pattern for feedback about booting with safe mode disabled -->
     <integer-array name="config_safeModeDisabledVibePattern">
@@ -214,4 +210,7 @@
          starts removing files to try to make percentage of available
          free space above this threshold value. -->
     <integer name="config_downloadDataDirLowSpaceThreshold">10</integer>
+    
+    <!-- Use legacy usb -->
+    <bool name="config_usesLegacyUsbDeviceManager">true</bool>
 </resources>

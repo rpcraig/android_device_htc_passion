@@ -20,9 +20,9 @@ PRIVATE_BUILD_DESC="passion-user 2.3.6 GRK39F 189904 release-keys"
 #
 PRODUCT_CODENAME := Perdo
 ifneq ($(MINISKIRT),true)
-PRODUCT_VERSION_DEVICE_SPECIFIC := p2
+PRODUCT_VERSION_DEVICE_SPECIFIC := p3
 else
-PRODUCT_VERSION_DEVICE_SPECIFIC := p2-Miniskirt
+PRODUCT_VERSION_DEVICE_SPECIFIC := p3-Miniskirt
 endif
 
 PRODUCT_MOTD :="\n\n\n--------------------MESSAGE---------------------\nThank you for choosing Evervolv for your Google Nexus One\nPlease visit us at \#evervolv on irc.freenode.net\nFollow @preludedrew for the latest Evervolv updates\nGet the latest rom at evervolv.com\n------------------------------------------------\n"
@@ -36,14 +36,14 @@ ifneq ($(MINISKIRT),true)
 PRODUCT_PACKAGES += Camera
 endif
 
-# Extra RIL settings
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.ril.enable.managed.roaming=1 \
-    ro.ril.oem.nosim.ecclist=911,112,999,000,08,118,120,122,110,119,995 \
-    ro.ril.emc.mode=2
-
 # Copy hdpi specific bootanimation
 #PRODUCT_COPY_FILES +=  \
 #    vendor/ev/prebuilt/hvga/media/bootanimation.zip:system/media/bootanimation.zip
 # Use the n1 stock boot animation until we get a custom evervolv one.
-$(call inherit-product-if-exists, device/htc/passion/extras/extras.mk)
+# Nexus One Stock Boot Animation
+PRODUCT_COPY_FILES += device/htc/passion/extras/nexus-bootanimation.zip:system/media/bootanimation.zip
+
+# Get some gapps
+ifeq ($(GAPPS),true)
+$(call inherit-product, vendor/ev/prebuilt/gapps/gapps.mk)
+endif
