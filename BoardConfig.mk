@@ -56,27 +56,13 @@ WIFI_DRIVER_FW_PATH_AP      := "/vendor/firmware/fw_bcm4329_apsta.bin"
 WIFI_DRIVER_MODULE_ARG      := "firmware_path=/vendor/firmware/fw_bcm4329.bin nvram_path=/proc/calibration"
 WIFI_DRIVER_MODULE_NAME     := "bcm4329"
 
-##For when wifi is upgraded in 3.0
-# Connectivity - Wi-Fi
-#BOARD_WPA_SUPPLICANT_DRIVER := NL80211
-#WPA_SUPPLICANT_VERSION      := VER_0_8_X
-#BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd
-#BOARD_HOSTAPD_DRIVER        := NL80211
-#BOARD_HOSTAPD_PRIVATE_LIB   := lib_driver_cmd_bcmdhd
-#BOARD_WLAN_DEVICE           := bcmdhd
-#BOARD_WLAN_DEVICE_REV       := bcm4329
-#WIFI_DRIVER_MODULE_NAME     := "bcmdhd"
-#WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
-#WIFI_DRIVER_FW_PATH_STA     := "/vendor/firmware/fw_bcmdhd.bin"
-#WIFI_DRIVER_FW_PATH_P2P     := "/vendor/firmware/fw_bcmdhd_p2p.bin"
-#WIFI_DRIVER_FW_PATH_AP      := "/vendor/firmware/fw_bcmdhd_apsta.bin"
-
 BOARD_USES_GENERIC_AUDIO := false
 
 # Kernel
 BOARD_KERNEL_CMDLINE := no_console_suspend=1 wire.search_count=5
 BOARD_KERNEL_BASE := 0x20000000
 BOARD_KERNEL_NEW_PPPOX := true
+TARGET_PREBUILT_KERNEL := device/htc/passion/prebuilt/kernel
 
 #Compass/Accererometer
 BOARD_VENDOR_USE_AKMD := akm8973
@@ -88,10 +74,12 @@ BOARD_USES_OVERLAY := true
 #BOARD_USES_HGL := true
 COMMON_GLOBAL_CFLAGS += -DMISSING_EGL_EXTERNAL_IMAGE -DMISSING_EGL_PIXEL_FORMAT_YV12 -DMISSING_GRALLOC_BUFFERS
 
-# Qcom board
+# Qcom shit
 BOARD_VENDOR_QCOM_AMSS_VERSION := 3200
 BOARD_USES_QCOM_HARDWARE := true
 BOARD_USES_QCOM_LIBS := true
+# Call headers from msm-3.0: needed to build libs in hardware/qcom/display
+TARGET_SPECIFIC_HEADER_PATH := device/htc/passion/include
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
@@ -108,7 +96,7 @@ BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 3200
 # RIL
 BOARD_USE_NEW_LIBRIL_HTC := true
 
-# From supersonic
+# Misc
 BOARD_USE_OPENSSL_ENGINE := true
 
 # cat /proc/mtd #AOSP                   # cat /proc/mtd #CM7
@@ -122,7 +110,7 @@ BOARD_USE_OPENSSL_ENGINE := true
 # mtd6: 00200000 00020000 "crashdata"
 BOARD_BOOTIMAGE_PARTITION_SIZE := 0x00300000 #0x00380000
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x00400000
-
+#TARGET_USERIMAGES_USE_EXT4 := true #fuck why is this so hard to implement?
 ifeq ($(MINISKIRT),true)
 # Less fonts saves ~2mb
 SMALLER_FONT_FOOTPRINT := true
@@ -132,16 +120,15 @@ MINIMAL_NEWWAVELABS := true
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 150994944 #0x09000000 #0x08400000
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 205783040 #0x0c440000
 else
-# Use enlarged system partiton
+# Use larger system partiton
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 230686720
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 209715200
 endif
 
-BOARD_FLASH_BLOCK_SIZE := 131072 # use 4096 for ext4
+BOARD_FLASH_BLOCK_SIZE := 131072
 
+# Hacks
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/usb_mass_storage/lun0/file
+BOARD_USE_LEGACY_TRACKPAD := true
 
 TARGET_RELEASETOOLS_EXTENSIONS := device/htc/common
-
-# Call headers from msm-3.0: needed to build libs in hardware/qcom/display
-TARGET_SPECIFIC_HEADER_PATH := device/htc/passion/include

@@ -16,8 +16,9 @@
 
 ## (1) First, the most specific values, i.e. the aspects that are specific to GSM
 
-# Overlay files
+# Overlay files / Locale
 DEVICE_PACKAGE_OVERLAYS := device/htc/passion/overlay
+PRODUCT_LOCALES := en
 
 # General propreties
 PRODUCT_PROPERTY_OVERRIDES := \
@@ -90,13 +91,17 @@ PRODUCT_PACKAGES += \
     copybit.qsd8k \
     gralloc.qsd8k \
     hwcomposer.default \
+    libstagefrighthw
 #    hwcomposer.mahimahi \
 #    libgenlock \
 #    libmemalloc \
 #    libtilerenderer \
 #    libQcomUI
-
-PRODUCT_LOCALES := en
+## Filesystem management tools
+#PRODUCT_PACKAGES += \
+#    make_ext4fs \
+#    setup_fs \
+#    bml_over_mtd
 
 # Passion uses high-density artwork where available
 PRODUCT_AAPT_CONFIG := normal hdpi
@@ -119,8 +124,11 @@ PRODUCT_COPY_FILES += \
     device/htc/passion/prebuilt/bcm4329.ko:system/lib/modules/bcm4329.ko
 
 # Prebuilt Kernel
-PRODUCT_COPY_FILES += \
-    device/htc/passion/prebuilt/kernel:kernel
+ifeq ($(TARGET_PREBUILT_KERNEL),)
+    LOCAL_KERNEL := device/htc/passion/prebuilt/kernel
+else
+    LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
+endif
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -132,12 +140,16 @@ PRODUCT_COPY_FILES += \
     frameworks/base/data/etc/android.hardware.sensor.proximity.xml:system/etc/permissions/android.hardware.sensor.proximity.xml \
     frameworks/base/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
     frameworks/base/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
-    frameworks/base/data/etc/android.hardware.touchscreen.multitouch.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.xml \
+    frameworks/base/data/etc/android.hardware.touchscreen.multitouch.distinct.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.distict.xml \
     frameworks/base/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
+    frameworks/base/data/etc/android.hardware.sensor.accelerometer.xml:system/etc/permissions/android.hardware.sensor.accelerometer.xml \
+    frameworks/base/data/etc/android.hardware.sensor.compass.xml:system/etc/permissions/android.hardware.sensor.compass.xml \
+    packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml
 
-# media config xml file
-PRODUCT_COPY_FILES += \
-    device/htc/passion/media_profiles.xml:system/etc/media_profiles.xml
+
+## media config xml file
+#PRODUCT_COPY_FILES += \
+#    device/htc/passion/media_profiles.xml:system/etc/media_profiles.xml
 
 # Proprietary makefile
 $(call inherit-product-if-exists, vendor/htc/passion/passion-vendor.mk)

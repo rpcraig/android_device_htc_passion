@@ -27,7 +27,7 @@
     <!-- disable menu hard key on Passion in non-pattern lockscreen -->
     <bool name="config_disableMenuKeyInLockScreen">true</bool>
 
-<!-- Flag indicating whether the surface flinger has limited
+    <!-- Flag indicating whether the surface flinger has limited
          alpha compositing functionality in hardware.  If set, the window
          manager will disable alpha trasformation in animations where not
          strictly needed. -->
@@ -52,8 +52,7 @@
 
     <!-- Array of output values for LCD backlight corresponding to the LUX values
          in the config_autoBrightnessLevels array.  This array should have size one greater
-         than the size of the config_autoBrightnessLevels array.
-    -->
+         than the size of the config_autoBrightnessLevels array. -->
     <integer-array name="config_autoBrightnessLcdBacklightValues">
         <item>35</item>
         <item>55</item>
@@ -64,8 +63,7 @@
 
     <!-- Array of output values for button backlight corresponding to the LUX values
          in the config_autoBrightnessLevels array.  This array should have size one greater
-         than the size of the config_autoBrightnessLevels array.
-    -->
+         than the size of the config_autoBrightnessLevels array. -->
     <integer-array name="config_autoBrightnessButtonBacklightValues">
         <item>255</item>
         <item>255</item>
@@ -77,8 +75,7 @@
     <!-- Array of output values for keyboard backlight corresponding to the LUX values
          in the config_autoBrightnessLevels array.  This array should have size one greater
          than the size of the config_autoBrightnessLevels array.
-         Passion has no keyboard so all values are zero.
-    -->
+         Passion has no keyboard so all values are zero. -->
     <integer-array name="config_autoBrightnessKeyboardBacklightValues">
         <item>0</item>
         <item>0</item>
@@ -86,7 +83,7 @@
         <item>0</item>
         <item>0</item>
     </integer-array>
-    
+
     <!-- Component name of the default wallpaper. This will be ImageWallpaper if not 
          specified -->
 <!--
@@ -96,8 +93,8 @@
     <integer name="config_deskDockKeepsScreenOn">0</integer>
     <integer name="config_carDockKeepsScreenOn">1</integer>
 
-    <!-- Default color for notification LED is white -->
-    <color name="config_defaultNotificationColor">#ffffffff</color>
+    <!-- Default color for notification LED is white (new color is cyan) -->
+    <color name="config_defaultNotificationColor">#0099FF</color>
 
     <!-- Default blink frequency for notification LED is 9 seconds. -->
     <integer name="config_defaultNotificationLedOff">6000</integer>
@@ -197,7 +194,7 @@
          This feature should be disabled for most devices. -->
     <integer name="config_virtualKeyQuietTimeMillis">250</integer>
 
-<!-- Max space (in MB) allocated to DownloadManager to store the downloaded
+    <!-- Max space (in MB) allocated to DownloadManager to store the downloaded
          files if they are to be stored in DownloadManager's data dir,
          which typically is /data/data/com.android.providers.downloads/files -->
     <integer name="config_downloadDataDirSize">50</integer>
@@ -210,7 +207,7 @@
          starts removing files to try to make percentage of available
          free space above this threshold value. -->
     <integer name="config_downloadDataDirLowSpaceThreshold">10</integer>
-    
+
     <!-- Use legacy usb -->
     <bool name="config_usesLegacyUsbDeviceManager">true</bool>
 </resources>
