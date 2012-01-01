@@ -76,11 +76,9 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 PRODUCT_PACKAGES := \
     com.android.future.usb.accessory \
     gps.mahimahi \
-    librs_jni \
-    libOmxCore \
-    libOmxVidEnc \
     lights.mahimahi \
-    sensors.mahimahi
+    sensors.mahimahi \
+    librs_jni
 # Audio
 PRODUCT_PACKAGES += \
     audio.a2dp.default \
@@ -92,16 +90,17 @@ PRODUCT_PACKAGES += \
     gralloc.qsd8k \
     hwcomposer.default \
     libstagefrighthw
-#    hwcomposer.mahimahi \
+#    hwcomposer.qsd8k \
 #    libgenlock \
 #    libmemalloc \
 #    libtilerenderer \
 #    libQcomUI
-## Filesystem management tools
-#PRODUCT_PACKAGES += \
-#    make_ext4fs \
-#    setup_fs \
-#    bml_over_mtd
+# Omx
+PRODUCT_PACKAGES += \
+    libOmxCore \
+    libOmxVidEnc \
+    libOmxVdec \
+    libstagefrighthw
 
 # Passion uses high-density artwork where available
 PRODUCT_AAPT_CONFIG := normal hdpi
@@ -124,11 +123,14 @@ PRODUCT_COPY_FILES += \
     device/htc/passion/prebuilt/bcm4329.ko:system/lib/modules/bcm4329.ko
 
 # Prebuilt Kernel
-ifeq ($(TARGET_PREBUILT_KERNEL),)
-    LOCAL_KERNEL := device/htc/passion/prebuilt/kernel
-else
-    LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
-endif
+PRODUCT_COPY_FILES += \
+    device/htc/passion/prebuilt/kernel:kernel
+
+# Camera libs
+PRODUCT_COPY_FILES += \
+    device/htc/passion/prebuilt/camera.qsd8k.so:system/lib/hw/camera.qsd8k.so \
+    device/htc/passion/prebuilt/liboemcamera.so:system/lib/liboemcamera.so \
+    device/htc/passion/prebuilt/libcamera.so:system/lib/libcamera.so
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -146,10 +148,9 @@ PRODUCT_COPY_FILES += \
     frameworks/base/data/etc/android.hardware.sensor.compass.xml:system/etc/permissions/android.hardware.sensor.compass.xml \
     packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml
 
-
-## media config xml file
-#PRODUCT_COPY_FILES += \
-#    device/htc/passion/media_profiles.xml:system/etc/media_profiles.xml
+# media config xml file
+PRODUCT_COPY_FILES += \
+    device/htc/passion/media_profiles.xml:system/etc/media_profiles.xml
 
 # Proprietary makefile
 $(call inherit-product-if-exists, vendor/htc/passion/passion-vendor.mk)

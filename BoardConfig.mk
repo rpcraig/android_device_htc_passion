@@ -62,7 +62,7 @@ BOARD_USES_GENERIC_AUDIO := false
 BOARD_KERNEL_CMDLINE := no_console_suspend=1 wire.search_count=5
 BOARD_KERNEL_BASE := 0x20000000
 BOARD_KERNEL_NEW_PPPOX := true
-TARGET_PREBUILT_KERNEL := device/htc/passion/prebuilt/kernel
+#TARGET_PREBUILT_KERNEL := device/htc/passion/prebuilt/kernel
 
 #Compass/Accererometer
 BOARD_VENDOR_USE_AKMD := akm8973
@@ -80,6 +80,10 @@ BOARD_USES_QCOM_HARDWARE := true
 BOARD_USES_QCOM_LIBS := true
 # Call headers from msm-3.0: needed to build libs in hardware/qcom/display
 TARGET_SPECIFIC_HEADER_PATH := device/htc/passion/include
+#Hack for old gralloc
+BOARD_USES_LEGACY_QCOM := true
+
+#BOARD_USES_GENLOCK := true
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
@@ -99,6 +103,10 @@ BOARD_USE_NEW_LIBRIL_HTC := true
 # Misc
 BOARD_USE_OPENSSL_ENGINE := true
 
+# Hacks
+TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/usb_mass_storage/lun0/file
+BOARD_USE_LEGACY_TRACKPAD := true
+
 # cat /proc/mtd #AOSP                   # cat /proc/mtd #CM7
 # dev:    size   erasesize  name        # dev:    size   erasesize  name
 # mtd0: 000e0000 00020000 "misc"        # mtd0: 000e0000 00020000 "misc"
@@ -110,7 +118,7 @@ BOARD_USE_OPENSSL_ENGINE := true
 # mtd6: 00200000 00020000 "crashdata"
 BOARD_BOOTIMAGE_PARTITION_SIZE := 0x00300000 #0x00380000
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x00400000
-#TARGET_USERIMAGES_USE_EXT4 := true #fuck why is this so hard to implement?
+
 ifeq ($(MINISKIRT),true)
 # Less fonts saves ~2mb
 SMALLER_FONT_FOOTPRINT := true
@@ -126,9 +134,5 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 209715200
 endif
 
 BOARD_FLASH_BLOCK_SIZE := 131072
-
-# Hacks
-TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/usb_mass_storage/lun0/file
-BOARD_USE_LEGACY_TRACKPAD := true
 
 TARGET_RELEASETOOLS_EXTENSIONS := device/htc/common
