@@ -45,6 +45,8 @@ ARCH_ARM_HAVE_TLS_REGISTER := true
 TARGET_GLOBAL_CFLAGS += -mtune=cortex-a8 -mfpu=neon -mfloat-abi=softfp
 TARGET_GLOBAL_CPPFLAGS += -mtune=cortex-a8 -mfpu=neon -mfloat-abi=softfp
 
+TARGET_SPECIFIC_HEADER_PATH := device/htc/passion/include
+
 # Wifi related defines
 BOARD_WPA_SUPPLICANT_DRIVER := WEXT
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wext
@@ -78,11 +80,6 @@ COMMON_GLOBAL_CFLAGS += -DMISSING_EGL_EXTERNAL_IMAGE -DMISSING_EGL_PIXEL_FORMAT_
 BOARD_VENDOR_QCOM_AMSS_VERSION := 3200
 BOARD_USES_QCOM_HARDWARE := true
 BOARD_USES_QCOM_LIBS := true
-# Call headers from msm-3.0: needed to build libs in hardware/qcom/display
-TARGET_SPECIFIC_HEADER_PATH := device/htc/passion/include
-#Hack for old gralloc
-BOARD_USES_LEGACY_QCOM := true
-
 #BOARD_USES_GENLOCK := true
 
 # Bluetooth
@@ -104,6 +101,7 @@ BOARD_USE_NEW_LIBRIL_HTC := true
 BOARD_USE_OPENSSL_ENGINE := true
 
 # Hacks
+BOARD_USES_LEGACY_QCOM := true
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/usb_mass_storage/lun0/file
 BOARD_USE_LEGACY_TRACKPAD := true
 

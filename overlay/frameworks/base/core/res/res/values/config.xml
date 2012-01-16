@@ -84,7 +84,7 @@
         <item>0</item>
     </integer-array>
 
-    <!-- Component name of the default wallpaper. This will be ImageWallpaper if not 
+    <!-- Component name of the default wallpaper. This will be ImageWallpaper if not
          specified -->
 <!--
     <string name="default_wallpaper_component">com.android.wallpaper/.nexus.NexusWallpaper</string>
@@ -160,14 +160,14 @@
 
     <!-- If this is true, the screen will come on when you unplug usb/power/whatever. -->
     <bool name="config_unplugTurnsOnScreen">true</bool>
-    
+
     <!-- Whether a software navigation bar should be shown. NOTE: in the future this may be
          autodetected from the Configuration. -->
     <bool name="config_showNavigationBar">false</bool>
-    
+
     <!-- Minimum screen brightness allowed by the power manager. -->
     <integer name="config_screenBrightnessDim">8</integer>
-    
+
     <!-- Boolean indicating whether the wifi chipset has dual frequency band support -->
     <bool translatable="false" name="config_wifi_dual_band_support">false</bool>
 
@@ -178,7 +178,7 @@
     <bool translatable="false" name="config_wifi_p2p_support">true</bool><!--Does it? I dont know-->
 
     <bool name="config_ui_enableFadingMarquee">false</bool>
-    
+
     <!-- Is the notification LED intrusive? Used to decide if there should be a disable option -->
     <bool name="config_intrusiveNotificationLed">true</bool>
 
@@ -208,6 +208,4 @@
          free space above this threshold value. -->
     <integer name="config_downloadDataDirLowSpaceThreshold">10</integer>
 
-    <!-- Use legacy usb -->
-    <bool name="config_usesLegacyUsbDeviceManager">true</bool>
 </resources>

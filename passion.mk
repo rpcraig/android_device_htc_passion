@@ -88,8 +88,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     copybit.qsd8k \
     gralloc.qsd8k \
-    hwcomposer.default \
-    libstagefrighthw
+    hwcomposer.default
 #    hwcomposer.qsd8k \
 #    libgenlock \
 #    libmemalloc \
@@ -126,11 +125,18 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/htc/passion/prebuilt/kernel:kernel
 
-# Camera libs
+# prebuilt camera modules
 PRODUCT_COPY_FILES += \
     device/htc/passion/prebuilt/camera.qsd8k.so:system/lib/hw/camera.qsd8k.so \
     device/htc/passion/prebuilt/liboemcamera.so:system/lib/liboemcamera.so \
     device/htc/passion/prebuilt/libcamera.so:system/lib/libcamera.so
+#temp: im just being lazy. need to merge in the code to build these
+PRODUCT_COPY_FILES += \
+    device/htc/passion/prebuilt/libOmxCore.so:system/lib/libOmxCore.so \
+    device/htc/passion/prebuilt/libOmxVdec.so:system/lib/libOmxVdec.so \
+    device/htc/passion/prebuilt/libOmxVidEnc.so:system/lib/libOmxVidEnc.so \
+    device/htc/passion/prebuilt/libmediaplayerservice.so:system/lib/libmediaplayerservice.so \
+    device/htc/passion/prebuilt/libstagefrighthw.so:system/lib/libstagefrighthw.so
 
 # Permissions
 PRODUCT_COPY_FILES += \
