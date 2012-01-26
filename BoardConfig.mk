@@ -42,10 +42,11 @@ TARGET_ARCH_VARIANT := armv7-a-neon
 ARCH_ARM_HAVE_TLS_REGISTER := true
 
 # FPU compilation flags
-TARGET_GLOBAL_CFLAGS += -mtune=cortex-a8 -mfpu=neon -mfloat-abi=softfp
-TARGET_GLOBAL_CPPFLAGS += -mtune=cortex-a8 -mfpu=neon -mfloat-abi=softfp
+TARGET_GLOBAL_CFLAGS    += -mtune=cortex-a8 -mfpu=neon -mfloat-abi=softfp
+TARGET_GLOBAL_CPPFLAGS  += -mtune=cortex-a8 -mfpu=neon -mfloat-abi=softfp
 
 TARGET_SPECIFIC_HEADER_PATH := device/htc/passion/include
+#android_pmem,ashmem,fb,genlock,msm_kgsl
 
 # Wifi related defines
 BOARD_WPA_SUPPLICANT_DRIVER := WEXT
@@ -61,7 +62,7 @@ WIFI_DRIVER_MODULE_NAME     := "bcm4329"
 BOARD_USES_GENERIC_AUDIO := false
 
 # Kernel
-BOARD_KERNEL_CMDLINE := no_console_suspend=1 wire.search_count=5
+BOARD_KERNEL_CMDLINE := no_console_suspend=1 wire.search_count=5 #console=ttyMSM0,115200n8
 BOARD_KERNEL_BASE := 0x20000000
 BOARD_KERNEL_NEW_PPPOX := true
 #TARGET_PREBUILT_KERNEL := device/htc/passion/prebuilt/kernel
@@ -71,16 +72,32 @@ BOARD_VENDOR_USE_AKMD := akm8973
 
 # Hardware rendering
 BOARD_EGL_CFG := device/htc/passion/egl.cfg
-BOARD_USES_OVERLAY := true
-#USE_OPENGL_RENDERER := true
-#BOARD_USES_HGL := true
 COMMON_GLOBAL_CFLAGS += -DMISSING_EGL_EXTERNAL_IMAGE -DMISSING_EGL_PIXEL_FORMAT_YV12 -DMISSING_GRALLOC_BUFFERS
+#COMMON_GLOBAL_CFLAGS += -DREFRESH_RATE=60 -DQCOM_HARDWARE
+COMMON_GLOBAL_CFLAGS += -DCOPYBIT_QSD8K
+USE_OPENGL_RENDERER := false
+#TARGET_USES_GENLOCK := true
+# if TARGET_GRALLOC_USES_ASHMEM is enabled, set debug.sf.hw=1 in system.prop
+# Try to use ASHMEM if possible (when non-MDP composition is used)
+#TARGET_GRALLOC_USES_ASHMEM := true
+# qsd dont have overlay support in kernel
+TARGET_USE_OVERLAY := false
+# qsd dont have bypass
+TARGET_HAVE_BYPASS := false
+# Find out what these do..if anything
+#HAVE_ADRENO200_SOURCE := true
+#HAVE_ADRENO200_SC_SOURCE := true
+#HAVE_ADRENO200_FIRMWARE := true
+#BOARD_USES_QCNE := true
+# I dont think these do anything
+#BOARD_USE_QCOM_PMEM := true
+#BOARD_USES_ADRENO_200 := true
+#TARGET_HARDWARE_3D := false
 
 # Qcom shit
 BOARD_VENDOR_QCOM_AMSS_VERSION := 3200
 BOARD_USES_QCOM_HARDWARE := true
 BOARD_USES_QCOM_LIBS := true
-#BOARD_USES_GENLOCK := true
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
@@ -104,6 +121,8 @@ BOARD_USE_OPENSSL_ENGINE := true
 BOARD_USES_LEGACY_QCOM := true
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/usb_mass_storage/lun0/file
 BOARD_USE_LEGACY_TRACKPAD := true
+# This is for the browser. I believe?
+TARGET_FORCE_CPU_UPLOAD := true
 
 # cat /proc/mtd #AOSP                   # cat /proc/mtd #CM7
 # dev:    size   erasesize  name        # dev:    size   erasesize  name

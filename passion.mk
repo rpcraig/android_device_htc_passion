@@ -57,6 +57,9 @@ ADDITIONAL_BUILD_PROPERTIES += ro.telephony.ril.v3=signalstrength
 # Disable HWAccel for now
 ADDITIONAL_BUILD_PROPERTIES += ro.config.disable_hw_accel=true
 
+# Enable ashmem
+#ADDITIONAL_BUILD_PROPERTIES += debug.sf.hw=1
+
 # Set usb type
 ADDITIONAL_DEFAULT_PROPERTIES += \
     persist.sys.usb.config=mass_storage \
@@ -78,7 +81,8 @@ PRODUCT_PACKAGES := \
     gps.mahimahi \
     lights.mahimahi \
     sensors.mahimahi \
-    librs_jni
+    librs_jni \
+    camera.qsd8k
 # Audio
 PRODUCT_PACKAGES += \
     audio.a2dp.default \
@@ -124,19 +128,6 @@ PRODUCT_COPY_FILES += \
 # Prebuilt Kernel
 PRODUCT_COPY_FILES += \
     device/htc/passion/prebuilt/kernel:kernel
-
-# prebuilt camera modules
-PRODUCT_COPY_FILES += \
-    device/htc/passion/prebuilt/camera.qsd8k.so:system/lib/hw/camera.qsd8k.so \
-    device/htc/passion/prebuilt/liboemcamera.so:system/lib/liboemcamera.so \
-    device/htc/passion/prebuilt/libcamera.so:system/lib/libcamera.so
-#temp: im just being lazy. need to merge in the code to build these
-PRODUCT_COPY_FILES += \
-    device/htc/passion/prebuilt/libOmxCore.so:system/lib/libOmxCore.so \
-    device/htc/passion/prebuilt/libOmxVdec.so:system/lib/libOmxVdec.so \
-    device/htc/passion/prebuilt/libOmxVidEnc.so:system/lib/libOmxVidEnc.so \
-    device/htc/passion/prebuilt/libmediaplayerservice.so:system/lib/libmediaplayerservice.so \
-    device/htc/passion/prebuilt/libstagefrighthw.so:system/lib/libstagefrighthw.so
 
 # Permissions
 PRODUCT_COPY_FILES += \
