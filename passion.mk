@@ -26,8 +26,19 @@ PRODUCT_PROPERTY_OVERRIDES := \
     wifi.interface=eth0 \
     wifi.supplicant_scan_interval=180 \
     ro.media.dec.jpeg.memcap=20000000 \
-    ro.opengles.version=131072 \
-    dalvik.vm.heapsize=48m
+    ro.opengles.version=131072
+
+# Dalvik properties - read from AndroidRuntime
+# dexop-flags:
+# "v="  verification 'n': none, 'r': remote, 'a': all
+# "o="  optimization 'n': none, 'v': verified, 'a': all, 'f': full
+# "m=y" register map
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.heapsize=48m \
+    dalvik.vm.dexopt-flags=v=n,o=v,m=y \
+    dalvik.vm.checkjni=false
+# we have enough storage space to hold precise GC data
+PRODUCT_TAGS += dalvik.gc.type-precise
 
 # Ril properties
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -36,41 +47,52 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.ril.oem.nosim.ecclist=911,112,999,000,08,118,120,122,110,119,995 \
     ro.ril.emc.mode=2 \
     ro.ril.hsxpa=2 \
-    ro.ril.gprsclass=10
-
-#    ro.ril.hsdpa.category=8 \
-#    ro.ril.hsupa.category=5 \
-#    ro.ril.gprsclass=12
+    ro.ril.gprsclass=10 \
+    ro.ril.disable.power.collapse=false \
+#    ro.ril.hsdpa.category=8 ro.ril.hsupa.category=5 ro.ril.gprsclass=12
 
 # Default network type.
-# 0 => /* GSM/WCDMA (WCDMA preferred) */
-# 3 => /* GSM/WCDMA (auto mode, according to PRL) */
+# 0 => GSM/WCDMA (WCDMA preferred), 3 => GSM/WCDMA (auto mode, according to PRL)
 PRODUCT_PROPERTY_OVERRIDES += ro.telephony.default_network=0
 
-# we have enough storage space to hold precise GC data
-PRODUCT_TAGS += dalvik.gc.type-precise
-
 # Ril workaround
-ADDITIONAL_BUILD_PROPERTIES += ro.telephony.ril.v3=signalstrength
-    #,skipbrokendatacall,facilitylock,datacall,icccardstatus
+# Also available: skipbrokendatacall,facilitylock,datacall,icccardstatus
+PRODUCT_PROPERTY_OVERRIDES += ro.telephony.ril.v3=signalstrength
 
-# Disable HWAccel for now
-ADDITIONAL_BUILD_PROPERTIES += ro.config.disable_hw_accel=true
+# Enable gpu composition: 0 => cpu composition, 1 => gpu composition
+# Note: composition.type overrides this so i probably don't even need it.
+PRODUCT_PROPERTY_OVERRIDES += debug.sf.hw=1
 
-# Enable ashmem
-#ADDITIONAL_BUILD_PROPERTIES += debug.sf.hw=1
+# Enable copybit composition
+PRODUCT_PROPERTY_OVERRIDES += debug.composition.type=mdp
+
+# Force 2 buffers - gralloc defaults to 3 and we only have 2
+PRODUCT_PROPERTY_OVERRIDES += debug.gr.numframebuffers=2
+
+# HardwareRenderer properties
+# dirty_regions: "false" to disable partial invalidates, override if enabletr=true
+PRODUCT_PROPERTY_OVERRIDES += \
+    hwui.render_dirty_regions=false \
+    hwui.disable_vsync=true \
+    hwui.print_config=choice \
+    debug.enabletr=false
+
+# Misc properties
+# events_per_sec: default 90
+PRODUCT_PROPERTY_OVERRIDES += \
+    pm.sleep_mode=true \
+    ro.telephony.call_ring.delay=2 \
+    net.tcp.buffersize.default=4096,87380,256960,4096,16384,256960 \
+    net.tcp.buffersize.wifi=4096,87380,256960,4096,16384,256960 \
+    net.tcp.buffersize.umts=4096,87380,256960,4096,16384,256960 \
+    net.tcp.buffersize.gprs=4096,87380,256960,4096,16384,256960 \
+    net.tcp.buffersize.edge=4096,87380,256960,4096,16384,256960
+#    windowsmgr.max_events_per_sec=160 \
 
 # Set usb type
-ADDITIONAL_DEFAULT_PROPERTIES += \
+ADDITIONAL_DEFAULT_PROPERTIES := \
     persist.sys.usb.config=mass_storage \
     persist.service.adb.enable=1
-
-
-# Performance Tweaks
-#PRODUCT_PROPERTY_OVERRIDES += \
-#    pm.sleep_mode=1 \
-#    ro.ril.disable.power.collapse=0 \
-#    windowsmgr.max_events_per_sec=260
 
 #
 # Packages needed for Passion
@@ -92,18 +114,25 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     copybit.qsd8k \
     gralloc.qsd8k \
-    hwcomposer.default
-#    hwcomposer.qsd8k \
-#    libgenlock \
-#    libmemalloc \
-#    libtilerenderer \
-#    libQcomUI
+    hwcomposer.default \
+    hwcomposer.qsd8k \
+    libgenlock \
+    libmemalloc \
+    libtilerenderer \
+    libQcomUI
 # Omx
 PRODUCT_PACKAGES += \
     libOmxCore \
     libOmxVidEnc \
     libOmxVdec \
     libstagefrighthw
+# Omx cli test apps
+PRODUCT_PACKAGES += \
+    libmm-omxcore \
+    mm-vdec-omx-test \
+    liblasic \
+    ast-mm-vdec-omx-test \
+    mm-venc-omx-test
 
 # Passion uses high-density artwork where available
 PRODUCT_AAPT_CONFIG := normal hdpi
@@ -126,8 +155,12 @@ PRODUCT_COPY_FILES += \
     device/htc/passion/prebuilt/bcm4329.ko:system/lib/modules/bcm4329.ko
 
 # Prebuilt Kernel
-PRODUCT_COPY_FILES += \
-    device/htc/passion/prebuilt/kernel:kernel
+ifeq ($(TARGET_PREBUILT_KERNEL),)
+LOCAL_KERNEL := device/htc/passion/prebuilt/kernel
+else
+LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
+endif
+PRODUCT_COPY_FILES += $(LOCAL_KERNEL):kernel
 
 # Permissions
 PRODUCT_COPY_FILES += \

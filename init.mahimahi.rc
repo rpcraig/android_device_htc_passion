@@ -58,7 +58,7 @@ on boot
     write /sys/block/mtdblock4/bdi/read_ahead_kb 4
     write /sys/block/mtdblock5/bdi/read_ahead_kb 4
 
-# Lower maximum frequency when screen is off
+    # Lower maximum frequency when screen is off
     write /sys/devices/system/cpu/cpu0/cpufreq/screen_off_max_freq 700000
 
     # Power Management

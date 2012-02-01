@@ -86,9 +86,7 @@
 
     <!-- Component name of the default wallpaper. This will be ImageWallpaper if not
          specified -->
-<!--
     <string name="default_wallpaper_component">com.android.wallpaper/.nexus.NexusWallpaper</string>
--->
 
     <integer name="config_deskDockKeepsScreenOn">0</integer>
     <integer name="config_carDockKeepsScreenOn">1</integer>
@@ -166,7 +164,7 @@
     <bool name="config_showNavigationBar">false</bool>
 
     <!-- Minimum screen brightness allowed by the power manager. -->
-    <integer name="config_screenBrightnessDim">8</integer>
+    <integer name="config_screenBrightnessDim">10</integer>
 
     <!-- Boolean indicating whether the wifi chipset has dual frequency band support -->
     <bool translatable="false" name="config_wifi_dual_band_support">false</bool>
@@ -175,7 +173,7 @@
     <bool translatable="false" name="config_wifi_background_scan_support">true</bool>
 
     <!-- Boolean indicating whether the wifi chipset has p2p support -->
-    <bool translatable="false" name="config_wifi_p2p_support">true</bool><!--Does it? I dont know-->
+    <bool translatable="false" name="config_wifi_p2p_support">true</bool>
 
     <bool name="config_ui_enableFadingMarquee">false</bool>
 
@@ -207,5 +205,8 @@
          starts removing files to try to make percentage of available
          free space above this threshold value. -->
     <integer name="config_downloadDataDirLowSpaceThreshold">10</integer>
+
+    <!-- If this is true, the screen will fade off. -->
+    <bool name="config_animateScreenLights">false</bool>
 
 </resources>

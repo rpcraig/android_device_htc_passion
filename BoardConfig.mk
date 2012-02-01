@@ -62,37 +62,51 @@ WIFI_DRIVER_MODULE_NAME     := "bcm4329"
 BOARD_USES_GENERIC_AUDIO := false
 
 # Kernel
-BOARD_KERNEL_CMDLINE := no_console_suspend=1 wire.search_count=5 #console=ttyMSM0,115200n8
-BOARD_KERNEL_BASE := 0x20000000
-BOARD_KERNEL_NEW_PPPOX := true
-#TARGET_PREBUILT_KERNEL := device/htc/passion/prebuilt/kernel
+BOARD_KERNEL_CMDLINE    := no_console_suspend=1 wire.search_count=5
+#console=ttyMSM0,115200n8
+BOARD_KERNEL_BASE       := 0x20000000
+BOARD_KERNEL_NEW_PPPOX  := true
+TARGET_PREBUILT_KERNEL  := device/htc/passion/prebuilt/kernel
 
-#Compass/Accererometer
+# Compass/Accererometer
 BOARD_VENDOR_USE_AKMD := akm8973
 
 # Hardware rendering
-BOARD_EGL_CFG := device/htc/passion/egl.cfg
-COMMON_GLOBAL_CFLAGS += -DMISSING_EGL_EXTERNAL_IMAGE -DMISSING_EGL_PIXEL_FORMAT_YV12 -DMISSING_GRALLOC_BUFFERS
-#COMMON_GLOBAL_CFLAGS += -DREFRESH_RATE=60 -DQCOM_HARDWARE
-COMMON_GLOBAL_CFLAGS += -DCOPYBIT_QSD8K
-USE_OPENGL_RENDERER := false
-#TARGET_USES_GENLOCK := true
-# if TARGET_GRALLOC_USES_ASHMEM is enabled, set debug.sf.hw=1 in system.prop
-# Try to use ASHMEM if possible (when non-MDP composition is used)
-#TARGET_GRALLOC_USES_ASHMEM := true
-# qsd dont have overlay support in kernel
-TARGET_USE_OVERLAY := false
+BOARD_EGL_CFG           := device/htc/passion/egl.cfg
+USE_OPENGL_RENDERER     := true
+TARGET_USES_GENLOCK     := true
+# Unneccesary with new egl libs
+#COMMON_GLOBAL_CFLAGS   += -DMISSING_EGL_EXTERNAL_IMAGE -DMISSING_EGL_PIXEL_FORMAT_YV12
+# We only have 2 buffers so still neccesary to hack it.
+COMMON_GLOBAL_CFLAGS    += -DMISSING_GRALLOC_BUFFERS #-DFORCE_EGL_CONFIG=0x9
+# Unneccesary. Just a safety measure to make sure its all included
+COMMON_GLOBAL_CFLAGS    += -DQCOM_HARDWARE
+# Force refresh rate since fps calc is broke and reports 0
+COMMON_GLOBAL_CFLAGS    += -DREFRESH_RATE=60
+# qsd dont have overlay
+TARGET_USE_OVERLAY      := false
 # qsd dont have bypass
-TARGET_HAVE_BYPASS := false
+TARGET_HAVE_BYPASS      := false
+# qsd dont support c2d
+TARGET_USES_C2D_COMPOSITION := false
+
+# Try to use ASHMEM if possible (when non-MDP composition is used)
+# if enabled, set debug.sf.hw=1 in system.prop
+# This is still confusing to me disabling for now since pmem and mdp seems to work fine
+#TARGET_GRALLOC_USES_ASHMEM := true
+
 # Find out what these do..if anything
+# used in cafs tree nothing actually present is ours (yet)
 #HAVE_ADRENO200_SOURCE := true
 #HAVE_ADRENO200_SC_SOURCE := true
 #HAVE_ADRENO200_FIRMWARE := true
 #BOARD_USES_QCNE := true
-# I dont think these do anything
+# I dont think these do anything but everyone else is using them
 #BOARD_USE_QCOM_PMEM := true
 #BOARD_USES_ADRENO_200 := true
 #TARGET_HARDWARE_3D := false
+# Debuging egl
+COMMON_GLOBAL_CFLAGS += -DEGL_TRACE #-DDEBUG_CALC_FPS
 
 # Qcom shit
 BOARD_VENDOR_QCOM_AMSS_VERSION := 3200
@@ -118,11 +132,10 @@ BOARD_USE_NEW_LIBRIL_HTC := true
 BOARD_USE_OPENSSL_ENGINE := true
 
 # Hacks
-BOARD_USES_LEGACY_QCOM := true
+#BOARD_USES_LEGACY_QCOM         := true
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/usb_mass_storage/lun0/file
-BOARD_USE_LEGACY_TRACKPAD := true
-# This is for the browser. I believe?
-TARGET_FORCE_CPU_UPLOAD := true
+BOARD_USE_LEGACY_TRACKPAD       := true
+TARGET_FORCE_CPU_UPLOAD         := true
 
 # cat /proc/mtd #AOSP                   # cat /proc/mtd #CM7
 # dev:    size   erasesize  name        # dev:    size   erasesize  name
