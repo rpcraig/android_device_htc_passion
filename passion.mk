@@ -34,33 +34,35 @@ PRODUCT_PROPERTY_OVERRIDES := \
 # "o="  optimization 'n': none, 'v': verified, 'a': all, 'f': full
 # "m=y" register map
 PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.heapsize=48m \
     dalvik.vm.dexopt-flags=v=n,o=v,m=y \
-    dalvik.vm.checkjni=false
+    dalvik.vm.checkjni=false \
+    dalvik.vm.heapstartsize=5m \
+    dalvik.vm.heapgrowthlimit=48m \
+    dalvik.vm.heapsize=128m
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
 
 # Ril properties
+# default_network:
+# 0 => GSM/WCDMA (WCDMA preferred), 3 => GSM/WCDMA (auto mode, according to PRL)
+# ril.v3: Also available: skipbrokendatacall,facilitylock,datacall,icccardstatus
 PRODUCT_PROPERTY_OVERRIDES += \
-    rild.libpath=/system/lib/libhtc_ril.so \
     ro.ril.enable.managed.roaming=1 \
     ro.ril.oem.nosim.ecclist=911,112,999,000,08,118,120,122,110,119,995 \
     ro.ril.emc.mode=2 \
     ro.ril.hsxpa=2 \
     ro.ril.gprsclass=10 \
     ro.ril.disable.power.collapse=false \
-#    ro.ril.hsdpa.category=8 ro.ril.hsupa.category=5 ro.ril.gprsclass=12
+    rild.libpath=/system/lib/libhtc_ril.so \
+    ro.telephony.call_ring.delay=2 \
+    ro.telephony.ril.v3=signalstrength \
+    ro.telephony.default_network=0
 
-# Default network type.
-# 0 => GSM/WCDMA (WCDMA preferred), 3 => GSM/WCDMA (auto mode, according to PRL)
-PRODUCT_PROPERTY_OVERRIDES += ro.telephony.default_network=0
-
-# Ril workaround
-# Also available: skipbrokendatacall,facilitylock,datacall,icccardstatus
-PRODUCT_PROPERTY_OVERRIDES += ro.telephony.ril.v3=signalstrength
+# Don't set /proc/sys/vm/dirty_ratio to 0 when USB mounting
+PRODUCT_PROPERTY_OVERRIDES += ro.vold.umsdirtyratio=20
 
 # Enable gpu composition: 0 => cpu composition, 1 => gpu composition
-# Note: composition.type overrides this so i probably don't even need it.
+# Note: must be 1 for debug.composition.type to work
 PRODUCT_PROPERTY_OVERRIDES += debug.sf.hw=1
 
 # Enable copybit composition
@@ -78,16 +80,12 @@ PRODUCT_PROPERTY_OVERRIDES += \
     debug.enabletr=false
 
 # Misc properties
-# events_per_sec: default 90
 PRODUCT_PROPERTY_OVERRIDES += \
-    pm.sleep_mode=true \
-    ro.telephony.call_ring.delay=2 \
     net.tcp.buffersize.default=4096,87380,256960,4096,16384,256960 \
     net.tcp.buffersize.wifi=4096,87380,256960,4096,16384,256960 \
     net.tcp.buffersize.umts=4096,87380,256960,4096,16384,256960 \
     net.tcp.buffersize.gprs=4096,87380,256960,4096,16384,256960 \
     net.tcp.buffersize.edge=4096,87380,256960,4096,16384,256960
-#    windowsmgr.max_events_per_sec=160 \
 
 # Set usb type
 ADDITIONAL_DEFAULT_PROPERTIES := \
@@ -97,7 +95,7 @@ ADDITIONAL_DEFAULT_PROPERTIES := \
 #
 # Packages needed for Passion
 #
-# Sensors and stuff
+# Sensors
 PRODUCT_PACKAGES := \
     com.android.future.usb.accessory \
     gps.mahimahi \
@@ -126,13 +124,6 @@ PRODUCT_PACKAGES += \
     libOmxVidEnc \
     libOmxVdec \
     libstagefrighthw
-# Omx cli test apps
-PRODUCT_PACKAGES += \
-    libmm-omxcore \
-    mm-vdec-omx-test \
-    liblasic \
-    ast-mm-vdec-omx-test \
-    mm-venc-omx-test
 
 # Passion uses high-density artwork where available
 PRODUCT_AAPT_CONFIG := normal hdpi

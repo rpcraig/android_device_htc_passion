@@ -46,7 +46,6 @@ TARGET_GLOBAL_CFLAGS    += -mtune=cortex-a8 -mfpu=neon -mfloat-abi=softfp
 TARGET_GLOBAL_CPPFLAGS  += -mtune=cortex-a8 -mfpu=neon -mfloat-abi=softfp
 
 TARGET_SPECIFIC_HEADER_PATH := device/htc/passion/include
-#android_pmem,ashmem,fb,genlock,msm_kgsl
 
 # Wifi related defines
 BOARD_WPA_SUPPLICANT_DRIVER := WEXT
@@ -75,19 +74,19 @@ BOARD_VENDOR_USE_AKMD := akm8973
 BOARD_EGL_CFG           := device/htc/passion/egl.cfg
 USE_OPENGL_RENDERER     := true
 TARGET_USES_GENLOCK     := true
-# Unneccesary with new egl libs
-#COMMON_GLOBAL_CFLAGS   += -DMISSING_EGL_EXTERNAL_IMAGE -DMISSING_EGL_PIXEL_FORMAT_YV12
-# We only have 2 buffers so still neccesary to hack it.
-COMMON_GLOBAL_CFLAGS    += -DMISSING_GRALLOC_BUFFERS #-DFORCE_EGL_CONFIG=0x9
-# Unneccesary. Just a safety measure to make sure its all included
+# Unnecessary with new egl libs
+#COMMON_GLOBAL_CFLAGS    += -DMISSING_EGL_EXTERNAL_IMAGE
+# Our copybit supports YV12 conversion, so not needed
+#COMMON_GLOBAL_CFLAGS    += -DMISSING_EGL_PIXEL_FORMAT_YV12
+# We only have 2 buffers so still need to hack it.
+COMMON_GLOBAL_CFLAGS    += -DMISSING_GRALLOC_BUFFERS #-DFORCE_EGL_CONFIG=0x9 #0x5e5
+# Just a safety measure to make sure its all included
 COMMON_GLOBAL_CFLAGS    += -DQCOM_HARDWARE
 # Force refresh rate since fps calc is broke and reports 0
 COMMON_GLOBAL_CFLAGS    += -DREFRESH_RATE=60
-# qsd dont have overlay
+# qsd8k: no support for overlay, bypass, or c2d
 TARGET_USE_OVERLAY      := false
-# qsd dont have bypass
 TARGET_HAVE_BYPASS      := false
-# qsd dont support c2d
 TARGET_USES_C2D_COMPOSITION := false
 
 # Try to use ASHMEM if possible (when non-MDP composition is used)
@@ -106,7 +105,7 @@ TARGET_USES_C2D_COMPOSITION := false
 #BOARD_USES_ADRENO_200 := true
 #TARGET_HARDWARE_3D := false
 # Debuging egl
-COMMON_GLOBAL_CFLAGS += -DEGL_TRACE #-DDEBUG_CALC_FPS
+COMMON_GLOBAL_CFLAGS += -DEGL_TRACE
 
 # Qcom shit
 BOARD_VENDOR_QCOM_AMSS_VERSION := 3200
@@ -132,7 +131,6 @@ BOARD_USE_NEW_LIBRIL_HTC := true
 BOARD_USE_OPENSSL_ENGINE := true
 
 # Hacks
-#BOARD_USES_LEGACY_QCOM         := true
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/usb_mass_storage/lun0/file
 BOARD_USE_LEGACY_TRACKPAD       := true
 TARGET_FORCE_CPU_UPLOAD         := true
