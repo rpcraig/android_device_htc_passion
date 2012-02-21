@@ -78,8 +78,10 @@ TARGET_USES_GENLOCK     := true
 #COMMON_GLOBAL_CFLAGS    += -DMISSING_EGL_EXTERNAL_IMAGE
 # Our copybit supports YV12 conversion, so not needed
 #COMMON_GLOBAL_CFLAGS    += -DMISSING_EGL_PIXEL_FORMAT_YV12
+# This just breaks everything
+#COMMON_GLOBAL_CFLAGS    += -DFORCE_EGL_CONFIG=0x9 #0x5e5
 # We only have 2 buffers so still need to hack it.
-COMMON_GLOBAL_CFLAGS    += -DMISSING_GRALLOC_BUFFERS #-DFORCE_EGL_CONFIG=0x9 #0x5e5
+COMMON_GLOBAL_CFLAGS    += -DMISSING_GRALLOC_BUFFERS
 # Just a safety measure to make sure its all included
 COMMON_GLOBAL_CFLAGS    += -DQCOM_HARDWARE
 # Force refresh rate since fps calc is broke and reports 0
@@ -91,8 +93,10 @@ TARGET_USES_C2D_COMPOSITION := false
 
 # Try to use ASHMEM if possible (when non-MDP composition is used)
 # if enabled, set debug.sf.hw=1 in system.prop
-# This is still confusing to me disabling for now since pmem and mdp seems to work fine
 #TARGET_GRALLOC_USES_ASHMEM := true
+
+# Debuging egl
+COMMON_GLOBAL_CFLAGS += -DEGL_TRACE
 
 # Find out what these do..if anything
 # used in cafs tree nothing actually present is ours (yet)
@@ -104,10 +108,8 @@ TARGET_USES_C2D_COMPOSITION := false
 #BOARD_USE_QCOM_PMEM := true
 #BOARD_USES_ADRENO_200 := true
 #TARGET_HARDWARE_3D := false
-# Debuging egl
-COMMON_GLOBAL_CFLAGS += -DEGL_TRACE
 
-# Qcom shit
+# Qcom
 BOARD_VENDOR_QCOM_AMSS_VERSION := 3200
 BOARD_USES_QCOM_HARDWARE := true
 BOARD_USES_QCOM_LIBS := true
@@ -157,8 +159,8 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 150994944 #0x09000000 #0x08400000
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 205783040 #0x0c440000
 else
 # Use larger system partiton
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 230686720
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 209715200
+BOARD_SYSTEMIMAGE_PARTITION_SIZE    := 220200960 # 230686720
+BOARD_USERDATAIMAGE_PARTITION_SIZE  := 228589568 # 209715200
 endif
 
 BOARD_FLASH_BLOCK_SIZE := 131072

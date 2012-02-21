@@ -35,10 +35,11 @@ PRODUCT_PROPERTY_OVERRIDES := \
 # "m=y" register map
 PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.dexopt-flags=v=n,o=v,m=y \
-    dalvik.vm.checkjni=false \
-    dalvik.vm.heapstartsize=5m \
-    dalvik.vm.heapgrowthlimit=48m \
-    dalvik.vm.heapsize=128m
+    dalvik.vm.checkjni=false
+
+# Default heap settings for 512mb device
+include frameworks/base/build/phone-hdpi-512-dalvik-heap.mk
+
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
 
@@ -78,14 +79,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     hwui.disable_vsync=true \
     hwui.print_config=choice \
     debug.enabletr=false
-
-# Misc properties
-PRODUCT_PROPERTY_OVERRIDES += \
-    net.tcp.buffersize.default=4096,87380,256960,4096,16384,256960 \
-    net.tcp.buffersize.wifi=4096,87380,256960,4096,16384,256960 \
-    net.tcp.buffersize.umts=4096,87380,256960,4096,16384,256960 \
-    net.tcp.buffersize.gprs=4096,87380,256960,4096,16384,256960 \
-    net.tcp.buffersize.edge=4096,87380,256960,4096,16384,256960
 
 # Set usb type
 ADDITIONAL_DEFAULT_PROPERTIES := \
@@ -139,7 +132,8 @@ PRODUCT_COPY_FILES := \
     device/htc/passion/h2w_headset.kl:system/usr/keylayout/h2w_headset.kl \
     device/htc/passion/mahimahi-nav.idc:system/usr/idc/mahimahi-nav.idc \
     device/htc/passion/synaptics-rmi-touchscreen.idc:system/usr/idc/synaptics-rmi-touchscreen.idc \
-    device/htc/passion/vold.fstab:system/etc/vold.fstab
+    device/htc/passion/vold.fstab:system/etc/vold.fstab \
+    device/htc/passion/sysctl.conf:system/etc/sysctl.conf
 
 # Prebuilt Modules
 PRODUCT_COPY_FILES += \

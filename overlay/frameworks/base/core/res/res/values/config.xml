@@ -33,6 +33,9 @@
          strictly needed. -->
     <bool name="config_sf_limitedAlpha">true</bool>
 
+    <!-- passion doesn't handle this blur effect very quickly. -->
+    <bool name="config_sf_slowBlur">true</bool>
+
     <!-- Array of light sensor LUX values to define our levels for auto backlight brightness support.
          The N entries of this array define N + 1 zones as follows:
 
