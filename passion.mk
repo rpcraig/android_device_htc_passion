@@ -25,7 +25,7 @@ PRODUCT_AAPT_CONFIG := normal hdpi
 PRODUCT_AAPT_PREF_CONFIG := hdpi
 
 # General propreties
-PRODUCT_PROPERTY_OVERRIDES := \
+PRODUCT_PROPERTY_OVERRIDES += \
     ro.sf.lcd_density=240 \
     wifi.interface=wlan0 \
     wifi.supplicant_scan_interval=180 \
@@ -82,7 +82,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     debug.enabletr=false
 
 # Set usb type
-ADDITIONAL_DEFAULT_PROPERTIES := \
+ADDITIONAL_DEFAULT_PROPERTIES += \
     persist.sys.usb.config=mass_storage \
     persist.service.adb.enable=1
 
@@ -94,7 +94,7 @@ ADDITIONAL_DEFAULT_PROPERTIES := \
 # Packages needed for Passion
 #
 # Sensors
-PRODUCT_PACKAGES := \
+PRODUCT_PACKAGES += \
     com.android.future.usb.accessory \
     gps.mahimahi \
     lights.mahimahi \
@@ -110,7 +110,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     copybit.qsd8k \
     gralloc.qsd8k \
-    hwcomposer.default \
     hwcomposer.qsd8k \
     libgenlock \
     libmemalloc \
@@ -124,7 +123,7 @@ PRODUCT_PACKAGES += \
     libstagefrighthw
 
 # Prebuilt files/configs
-PRODUCT_COPY_FILES := \
+PRODUCT_COPY_FILES += \
     device/htc/passion/init.mahimahi.rc:root/init.mahimahi.rc \
     device/htc/passion/init.mahimahi.usb.rc:root/init.mahimahi.usb.rc \
     device/htc/passion/ueventd.mahimahi.rc:root/ueventd.mahimahi.rc \

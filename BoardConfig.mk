@@ -61,6 +61,8 @@ WIFI_DRIVER_MODULE_ARG      := "iface_name=wlan firmware_path=/system/vendor/fir
 WIFI_DRIVER_MODULE_NAME     := "bcm4329"
 
 BOARD_USES_GENERIC_AUDIO := false
+# prevent breakage from QCOM_HARDWARE in system/audio.h
+COMMON_GLOBAL_CFLAGS += -DLEGACY_AUDIO_COMPAT
 
 # Kernel
 BOARD_KERNEL_CMDLINE    := no_console_suspend=1 wire.search_count=5
@@ -80,8 +82,6 @@ TARGET_USES_GENLOCK     := true
 #COMMON_GLOBAL_CFLAGS    += -DMISSING_EGL_EXTERNAL_IMAGE
 # Our copybit supports YV12 conversion, so not needed
 #COMMON_GLOBAL_CFLAGS    += -DMISSING_EGL_PIXEL_FORMAT_YV12
-# This just breaks everything
-#COMMON_GLOBAL_CFLAGS    += -DFORCE_EGL_CONFIG=0x9 #0x5e5
 # We only have 2 buffers so still need to hack it.
 COMMON_GLOBAL_CFLAGS    += -DMISSING_GRALLOC_BUFFERS
 # Just a safety measure to make sure its all included
@@ -92,10 +92,8 @@ COMMON_GLOBAL_CFLAGS    += -DREFRESH_RATE=60
 TARGET_USE_OVERLAY      := false
 TARGET_HAVE_BYPASS      := false
 TARGET_USES_C2D_COMPOSITION := false
-
-# Try to use ASHMEM if possible (when non-MDP composition is used)
-# if enabled, set debug.sf.hw=1 in system.prop
-#TARGET_GRALLOC_USES_ASHMEM := true
+# Allow fallback to ashmem
+TARGET_GRALLOC_USES_ASHMEM := true
 
 # Debuging egl
 COMMON_GLOBAL_CFLAGS += -DEGL_TRACE
