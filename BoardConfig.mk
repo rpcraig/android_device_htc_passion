@@ -93,15 +93,7 @@ TARGET_GRALLOC_USES_ASHMEM := true
 # Debuging egl
 COMMON_GLOBAL_CFLAGS += -DEGL_TRACE
 
-# Find out what these do..if anything
-# used in cafs tree nothing actually present is ours (yet)
-#HAVE_ADRENO200_SOURCE := true
-#HAVE_ADRENO200_SC_SOURCE := true
-#HAVE_ADRENO200_FIRMWARE := true
-#BOARD_USES_QCNE := true
-# I dont think these do anything but everyone else is using them
 #BOARD_USE_QCOM_PMEM := true
-#BOARD_USES_ADRENO_200 := true
 #TARGET_HARDWARE_3D := false
 
 # Qcom

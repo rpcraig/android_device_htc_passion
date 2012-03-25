@@ -72,7 +72,7 @@ on boot
     write /sys/kernel/mm/ksm/sleep_millisecs 3000
     write /sys/kernel/mm/ksm/pages_to_scan 256
     # enable KSM
-#    write /sys/kernel/mm/ksm/run 1
+    write /sys/kernel/mm/ksm/run 1
 
     # Wakelock debug
     write /sys/module/wakelock/parameters/debug_mask 7

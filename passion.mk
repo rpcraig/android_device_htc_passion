@@ -57,7 +57,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.ril.disable.power.collapse=false \
     rild.libpath=/system/lib/libhtc_ril.so \
     ro.telephony.call_ring.delay=2 \
-    ro.telephony.ril.v3=signalstrength \
+    ro.telephony.ril.v3=signalstrength,singlepdp \
     ro.telephony.default_network=0
 
 # Don't set /proc/sys/vm/dirty_ratio to 0 when USB mounting
@@ -166,9 +166,6 @@ PRODUCT_COPY_FILES += \
 # media config xml file
 PRODUCT_COPY_FILES += \
     device/htc/passion/media_profiles.xml:system/etc/media_profiles.xml
-
-# Proprietary makefile
-$(call inherit-product-if-exists, vendor/htc/passion/passion-vendor.mk)
 
 # media profiles and capabilities spec
 $(call inherit-product, device/htc/passion/media_a1026.mk)
