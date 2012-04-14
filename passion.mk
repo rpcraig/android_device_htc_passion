@@ -29,7 +29,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.sf.lcd_density=240 \
     windowsmgr.max_events_per_sec=120 \
     wifi.interface=wlan0 \
-    wifi.supplicant_scan_interval=180 \
+    wifi.supplicant_scan_interval=45 \
     ro.media.dec.jpeg.memcap=20000000 \
     ro.opengles.version=131072
 
