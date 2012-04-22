@@ -39,6 +39,8 @@ TARGET_CPU_ABI              := armeabi-v7a
 TARGET_CPU_ABI2             := armeabi
 ARCH_ARM_HAVE_TLS_REGISTER  := true
 
+TARGET_USE_SCORPION_BIONIC_OPTIMIZATION := true
+
 TARGET_SPECIFIC_HEADER_PATH := device/htc/passion/include
 
 # Wifi related defines
