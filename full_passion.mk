@@ -25,7 +25,7 @@
 $(call inherit-product, device/htc/passion/passion_us.mk)
 
 ifeq ($(MINISKIRT),true)
-$(call inherit-product, device/htc/passion/full_passion-miniskirt.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/small_base_telephony.mk)
 else
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 endif

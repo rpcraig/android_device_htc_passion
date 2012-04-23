@@ -1,7 +1,11 @@
 $(call inherit-product, device/htc/passion/full_passion.mk)
 
 # Inherit some common evervolv stuff.
+ifeq ($(MINISKIRT),true)
+$(call inherit-product, vendor/ev/config/common_small_phone.mk)
+else
 $(call inherit-product, vendor/ev/config/common_full_phone.mk)
+endif
 
 #
 # Setup device specific product configuration.
@@ -19,10 +23,10 @@ PRIVATE_BUILD_DESC="passion-user 2.3.6 GRK39F 189904 release-keys"
 # Set up the product codename, build version & MOTD.
 #
 PRODUCT_CODENAME := Perdo
-ifneq ($(MINISKIRT),true)
-PRODUCT_VERSION_DEVICE_SPECIFIC := a2
+ifeq ($(MINISKIRT),true)
+PRODUCT_VERSION_DEVICE_SPECIFIC := a2-StockHBoot
 else
-PRODUCT_VERSION_DEVICE_SPECIFIC := a1-Miniskirt
+PRODUCT_VERSION_DEVICE_SPECIFIC := a2
 endif
 
 PRODUCT_MOTD :="\n\n\n--------------------MESSAGE---------------------\nThank you for choosing Evervolv for your Google Nexus One\nPlease visit us at \#evervolv on irc.freenode.net\nFollow @preludedrew for the latest Evervolv updates\nGet the latest rom at evervolv.com\n------------------------------------------------\n"
@@ -42,8 +46,3 @@ endif
 
 # Hot reboot
 PRODUCT_PACKAGE_OVERLAYS += vendor/ev/overlay/hot_reboot
-
-# Get some gapps
-ifeq ($(GAPPS),true)
-$(call inherit-product, vendor/ev/prebuilt/gapps/gapps.mk)
-endif
