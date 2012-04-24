@@ -138,16 +138,10 @@ PRODUCT_COPY_FILES += \
     device/htc/passion/sysctl.conf:system/etc/sysctl.conf
 
 # Prebuilt Modules
+ifneq ($(BUILD_KERNEL),true)
 PRODUCT_COPY_FILES += \
     device/htc/passion/prebuilt/bcm4329.ko:system/lib/modules/bcm4329.ko
-
-# Prebuilt Kernel
-ifeq ($(TARGET_PREBUILT_KERNEL),)
-    LOCAL_KERNEL := device/htc/passion/prebuilt/kernel
-else
-    LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
 endif
-PRODUCT_COPY_FILES += $(LOCAL_KERNEL):kernel
 
 # Permissions
 PRODUCT_COPY_FILES += \

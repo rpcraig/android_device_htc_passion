@@ -64,6 +64,9 @@ BOARD_KERNEL_CMDLINE    := no_console_suspend=1 wire.search_count=5
 #console=ttyMSM0,115200n8
 BOARD_KERNEL_BASE       := 0x20000000
 BOARD_KERNEL_NEW_PPPOX  := true
+
+TARGET_KERNEL_CONFIG    := evervolv_mahimahi_defconfig
+TARGET_KERNEL_SOURCE    := kernel/htc/qsd8k
 TARGET_PREBUILT_KERNEL  := device/htc/passion/prebuilt/kernel
 
 # Compass/Accererometer
