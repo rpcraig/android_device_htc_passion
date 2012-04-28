@@ -67,7 +67,7 @@ BOARD_KERNEL_NEW_PPPOX  := true
 
 TARGET_KERNEL_CONFIG    := evervolv_mahimahi_defconfig
 TARGET_KERNEL_SOURCE    := kernel/htc/qsd8k
-TARGET_PREBUILT_KERNEL  := device/htc/passion/prebuilt/kernel
+#TARGET_PREBUILT_KERNEL  := device/htc/passion/prebuilt/kernel
 
 # Compass/Accererometer
 BOARD_VENDOR_USE_AKMD := akm8973

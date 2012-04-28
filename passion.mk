@@ -137,11 +137,23 @@ PRODUCT_COPY_FILES += \
     device/htc/passion/vold.fstab:system/etc/vold.fstab \
     device/htc/passion/sysctl.conf:system/etc/sysctl.conf
 
-# Prebuilt Modules
-ifneq ($(BUILD_KERNEL),true)
-PRODUCT_COPY_FILES += \
-    device/htc/passion/prebuilt/bcm4329.ko:system/lib/modules/bcm4329.ko
+ifeq ($(TARGET_PREBUILT_WIFI_MODULE),)
+LOCAL_WIFI_MODULE := kernel/msm/drivers/net/wireless/bcm4329/bcm4329.ko
+else
+LOCAL_WIFI_MODULE := $(TARGET_PREBUILT_WIFI_MODULE)
 endif
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_WIFI_MODULE):system/lib/modules/bcm4329.ko
+
+ifeq ($(TARGET_PREBUILT_KERNEL),)
+LOCAL_KERNEL := kernel/msm/arch/arm/boot/zImage
+else
+LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
+endif
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_KERNEL):kernel
 
 # Permissions
 PRODUCT_COPY_FILES += \
