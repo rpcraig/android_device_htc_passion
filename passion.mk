@@ -94,6 +94,10 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 #
 # Packages needed for Passion
 #
+# Camera
+PRODUCT_PACKAGES += \
+    Camera
+
 # Sensors
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory \
