@@ -187,3 +187,6 @@ $(call inherit-product, device/htc/common/common.mk)
 
 ## (2) Also get non-open-source GSM-specific aspects if available
 $(call inherit-product-if-exists, vendor/htc/passion/passion-vendor.mk)
+
+## Get some Gapps
+$(call inherit-product-if-exists, vendor/google/gapps/gapps.mk)
