@@ -179,6 +179,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/htc/passion/media_profiles.xml:system/etc/media_profiles.xml
 
+# bind mount cache partition script
+PRODUCT_COPY_FILES += \
+    device/htc/passion/relocate.sh:system/bin/relocate.sh
+
 # media profiles and capabilities spec
 $(call inherit-product, device/htc/passion/media_a1026.mk)
 
