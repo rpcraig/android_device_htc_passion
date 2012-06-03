@@ -16,35 +16,15 @@
 
 ## (1) First, the most specific values, i.e. the aspects that are specific to GSM
 
-# Overlay / Locale
+# Overlay
 DEVICE_PACKAGE_OVERLAYS := device/htc/passion/overlay
-PRODUCT_LOCALES := en
 
-# Passion uses high-density artwork where available
-PRODUCT_AAPT_CONFIG := normal hdpi
-PRODUCT_AAPT_PREF_CONFIG := hdpi
-
-# General propreties
+# General properties
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.sf.lcd_density=240 \
     windowsmgr.max_events_per_sec=120 \
-    wifi.interface=wlan0 \
-    wifi.supplicant_scan_interval=45 \
     ro.media.dec.jpeg.memcap=20000000 \
     ro.opengles.version=131072
-
-# Dalvik properties
-# dexop-flags: "v=" n|r|a, "o=" n|v|a|f, "m=y" register map
-# v=verify o=optimize: n=none r=remote a=all f=full v=verified
-PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.dexopt-flags=m=y \
-    dalvik.vm.checkjni=false
-
-# Default heap settings for 512mb device
-include frameworks/base/build/phone-hdpi-512-dalvik-heap.mk
-
-# we have enough storage space to hold precise GC data
-PRODUCT_TAGS += dalvik.gc.type-precise
 
 # Ril properties
 # default_network: 0 => GSM/WCDMA (WCDMA preferred), 3 => GSM/WCDMA (auto mode)
@@ -64,24 +44,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Don't set /proc/sys/vm/dirty_ratio to 0 when USB mounting
 PRODUCT_PROPERTY_OVERRIDES += ro.vold.umsdirtyratio=20
 
-# Enable gpu composition: 0 => cpu composition, 1 => gpu composition
-# Note: must be 1 for debug.composition.type to work
-PRODUCT_PROPERTY_OVERRIDES += debug.sf.hw=1
-
-# Enable copybit composition
-PRODUCT_PROPERTY_OVERRIDES += debug.composition.type=mdp
-
-# Force 2 buffers - gralloc defaults to 3 and we only have 2
-PRODUCT_PROPERTY_OVERRIDES += debug.gr.numframebuffers=2
-
-# HardwareRenderer properties
-# dirty_regions: "false" to disable partial invalidates, override if enabletr=true
-PRODUCT_PROPERTY_OVERRIDES += \
-    hwui.render_dirty_regions=false \
-    hwui.disable_vsync=true \
-    hwui.print_config=choice \
-    debug.enabletr=false
-
 # Set usb type
 ADDITIONAL_DEFAULT_PROPERTIES += \
     persist.sys.usb.config=mass_storage \
@@ -94,34 +56,13 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 #
 # Packages needed for Passion
 #
+
 # Sensors
 PRODUCT_PACKAGES += \
-    com.android.future.usb.accessory \
     gps.mahimahi \
     lights.mahimahi \
     sensors.mahimahi \
     camera.qsd8k
-# Audio
-PRODUCT_PACKAGES += \
-    libaudioutils \
-    audio.a2dp.default \
-    audio.primary.qsd8k \
-    audio_policy.qsd8k
-# GPU
-PRODUCT_PACKAGES += \
-    copybit.qsd8k \
-    gralloc.qsd8k \
-    hwcomposer.qsd8k \
-    libgenlock \
-    libmemalloc \
-    libtilerenderer \
-    libQcomUI
-# Omx
-PRODUCT_PACKAGES += \
-    libOmxCore \
-    libOmxVidEnc \
-    libOmxVdec \
-    libstagefrighthw
 
 # Prebuilt files/configs
 PRODUCT_COPY_FILES += \
@@ -137,26 +78,14 @@ PRODUCT_COPY_FILES += \
     device/htc/passion/sysctl.conf:system/etc/sysctl.conf
 
 # Prebuilt Modules
-ifneq ($(BUILD_KERNEL),true)
+ifeq (,$(BUILD_KERNEL))
 PRODUCT_COPY_FILES += \
     device/htc/passion/prebuilt/bcm4329.ko:system/lib/modules/bcm4329.ko
 endif
 
 # Permissions
 PRODUCT_COPY_FILES += \
-    frameworks/base/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
-    frameworks/base/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
-    frameworks/base/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
-    frameworks/base/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
-    frameworks/base/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
-    frameworks/base/data/etc/android.hardware.sensor.proximity.xml:system/etc/permissions/android.hardware.sensor.proximity.xml \
-    frameworks/base/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
-    frameworks/base/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
-    frameworks/base/data/etc/android.hardware.touchscreen.multitouch.distinct.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.distict.xml \
-    frameworks/base/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
-    frameworks/base/data/etc/android.hardware.sensor.accelerometer.xml:system/etc/permissions/android.hardware.sensor.accelerometer.xml \
-    frameworks/base/data/etc/android.hardware.sensor.compass.xml:system/etc/permissions/android.hardware.sensor.compass.xml \
-    packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml
+    frameworks/base/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml
 
 # media config xml file
 PRODUCT_COPY_FILES += \
@@ -165,8 +94,8 @@ PRODUCT_COPY_FILES += \
 # media profiles and capabilities spec
 $(call inherit-product, device/htc/passion/media_a1026.mk)
 
-# stuff common to all HTC phones
-$(call inherit-product, device/htc/common/common.mk)
+# Common qsd8k stuff
+$(call inherit-product, device/htc/qsd8k-common/qsd8k.mk)
 
 ## (2) Also get non-open-source GSM-specific aspects if available
 $(call inherit-product-if-exists, vendor/htc/passion/passion-vendor.mk)

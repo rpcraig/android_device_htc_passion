@@ -1,0 +1,5 @@
+Device configuration for Google Nexus One (passion)
+
+The full Ice Cream Sandwich experience requires a repartitioned hboot (provided in prebuilt/hboot)
+
+To build for Stock Hboots define MINISKIRT=true on the command line (e.g. make MINISKIRT=true)
