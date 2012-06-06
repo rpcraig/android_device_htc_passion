@@ -1,3 +1,6 @@
+# Call this first so apn list is actually copied
+$(call inherit-product, vendor/ev/config/gsm.mk)
+
 $(call inherit-product, device/htc/passion/full_passion.mk)
 
 # Inherit some common evervolv stuff.
@@ -35,7 +38,6 @@ PRODUCT_MOTD :="\n\n\n--------------------MESSAGE---------------------\nThank yo
 # Extra Packages
 #
 PRODUCT_PACKAGES += \
-    Stk \
     Camera
 
 # Nexus One ICS Boot Animation
